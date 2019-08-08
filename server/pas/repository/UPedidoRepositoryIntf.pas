@@ -3,7 +3,8 @@ unit UPedidoRepositoryIntf;
 interface
 
 uses
-  UPizzaSaborEnum, UPizzaTamanhoEnum;
+  UPizzaSaborEnum, UPizzaTamanhoEnum, UPedidoRetornoDTOImpl,
+  FireDAC.Comp.Client;
 
 type
   IPedidoRepository = interface(IInterface)
@@ -11,6 +12,7 @@ type
 
     procedure efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const AValorPedido: Currency;
       const ATempoPreparo: Integer; const ACodigoCliente: Integer);
+    procedure consultarPedido(const ADocumentoCliente: string; out AFDQuery : TFDQuery);
   end;
 
 implementation

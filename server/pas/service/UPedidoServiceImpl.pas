@@ -3,8 +3,13 @@ unit UPedidoServiceImpl;
 interface
 
 uses
-  UPedidoServiceIntf, UPizzaTamanhoEnum, UPizzaSaborEnum,
-  UPedidoRepositoryIntf, UPedidoRetornoDTOImpl, UClienteServiceIntf;
+  TypInfo,
+  UPedidoServiceIntf,
+  UPizzaTamanhoEnum,
+  UPizzaSaborEnum,
+  UPedidoRepositoryIntf,
+  UPedidoRetornoDTOImpl,
+  UClienteServiceIntf;
 
 type
   TPedidoService = class(TInterfacedObject, IPedidoService)
@@ -16,14 +21,15 @@ type
     function calcularTempoPreparo(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum): Integer;
   public
     function efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const ADocumentoCliente: String): TPedidoRetornoDTO;
-
+    function consultarPedido(const ADocumentoCliente: string) : TPedidoRetornoDTO;
     constructor Create; reintroduce;
   end;
 
 implementation
 
 uses
-  UPedidoRepositoryImpl, System.SysUtils, UClienteServiceImpl;
+  UPedidoRepositoryImpl, System.SysUtils, UClienteServiceImpl,
+  FireDAC.Comp.Client;
 
 { TPedidoService }
 
@@ -54,6 +60,27 @@ begin
     enGrande:
       Result := 40;
   end;
+end;
+
+function TPedidoService.consultarPedido(
+  const ADocumentoCliente: string): TPedidoRetornoDTO;
+var oFDQuery : TFDQuery;
+begin
+  oFDQuery := TFDQuery.Create(nil);
+  try
+    FPedidoRepository.consultarPedido(ADocumentoCliente,oFDQuery);
+    if (oFDQuery.IsEmpty) then
+      raise Exception.Create('O cliente com número de documento '+ ADocumentoCliente + ' não possui pedidos.');
+    Result := TPedidoRetornoDTO.Create(
+                                       TPizzaTamanhoEnum(GetEnumValue(TypeInfo(TPizzaTamanhoEnum), oFDQuery.FieldByName('en_tamanho').AsString)),
+                                       TPizzaSaborEnum(GetEnumValue(TypeInfo(TPizzaSaborEnum), oFDQuery.FieldByName('en_sabor').AsString)),
+                                       oFDQuery.FieldByName('vl_pedido').AsCurrency,
+                                       oFDQuery.FieldByName('nr_tempopedido').AsInteger
+                                      );
+  finally
+    oFDQuery.Free;
+  end;
+
 end;
 
 constructor TPedidoService.Create;
