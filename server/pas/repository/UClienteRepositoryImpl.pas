@@ -13,7 +13,7 @@ type
   public
     function adquirirCodigoCliente(const ADocumentoCliente: string): Integer;
     procedure adicionarCliente(const ADocumentoCliente: String);
-
+    procedure ConsultarPedido(const ADocumentoCliente: String;out AFDquery : TFDquery);
     constructor Create; reintroduce;
     destructor Destroy; override;
   end;
@@ -52,6 +52,12 @@ begin
   else
     raise Exception.Create('Cliente não identificado');
 
+end;
+
+procedure TClienteRepository.ConsultarPedido(const ADocumentoCliente: String;
+  out AFDquery: TFDquery);
+begin
+//
 end;
 
 constructor TClienteRepository.Create;

@@ -2,15 +2,16 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'Client'
-  ClientHeight = 250
-  ClientWidth = 596
-  Color = clBtnFace
+  ClientHeight = 270
+  ClientWidth = 597
+  Color = clHighlight
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poDesktopCenter
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -37,7 +38,7 @@ object Form1: TForm1
   object edtDocumentoCliente: TLabeledEdit
     Left = 16
     Top = 64
-    Width = 193
+    Width = 273
     Height = 21
     EditLabel.Width = 98
     EditLabel.Height = 13
@@ -47,7 +48,7 @@ object Form1: TForm1
   object cmbTamanhoPizza: TComboBox
     Left = 16
     Top = 109
-    Width = 193
+    Width = 273
     Height = 21
     TabOrder = 1
     Items.Strings = (
@@ -58,7 +59,7 @@ object Form1: TForm1
   object cmbSaborPizza: TComboBox
     Left = 16
     Top = 152
-    Width = 193
+    Width = 273
     Height = 21
     TabOrder = 2
     Items.Strings = (
@@ -67,8 +68,8 @@ object Form1: TForm1
       'enPortuguesa')
   end
   object Button1: TButton
-    Left = 104
-    Top = 216
+    Left = 56
+    Top = 192
     Width = 105
     Height = 25
     Caption = '&1 - Fazer Pedido'
@@ -76,10 +77,13 @@ object Form1: TForm1
     OnClick = Button1Click
   end
   object mmRetornoWebService: TMemo
+    AlignWithMargins = True
     Left = 312
     Top = 25
     Width = 265
-    Height = 217
+    Height = 105
+    Alignment = taCenter
+    Color = clSilver
     Lines.Strings = (
       'mmRetornoWebService')
     TabOrder = 4
@@ -94,5 +98,34 @@ object Form1: TForm1
     EditLabel.Caption = 'Endere'#231'o Pizzaria Backend:'
     TabOrder = 5
     Text = 'http://localhost:8080/soap/IPizzariaBackendController'
+  end
+  object BtnConsultarPedido: TButton
+    Left = 176
+    Top = 192
+    Width = 107
+    Height = 25
+    Caption = '2- Consultar Pedido'
+    TabOrder = 6
+    OnClick = BtnConsultarPedidoClick
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Top = 240
+    Width = 597
+    Height = 30
+    Panels = <
+      item
+        Width = 50
+      end>
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 240
+    Width = 597
+    Height = 30
+    Caption = 'Sistemas Distribuidos-Servidor SOAP'
+    Color = clBtnHighlight
+    ParentBackground = False
+    TabOrder = 8
   end
 end

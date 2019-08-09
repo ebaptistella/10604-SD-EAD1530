@@ -4,18 +4,21 @@ unit PizzariaBackendControllerImpl;
 
 interface
 
-uses Soap.InvokeRegistry, System.Types, Soap.XSBuiltIns, PizzariaBackendControllerIntf,
+uses Soap.InvokeRegistry, System.Types, Soap.XSBuiltIns,
+  PizzariaBackendControllerIntf,
   UPizzaSaborEnum, UPizzaTamanhoEnum, UPedidoServiceIntf,
   UPedidoRetornoDTOImpl;
 
 type
 
   { TPizzariaBackend }
-  TPizzariaBackendController = class(TInvokableClass, IPizzariaBackendController)
+  TPizzariaBackendController = class(TInvokableClass,
+    IPizzariaBackendController)
   private
     FPedidoService: IPedidoService;
   public
-    function efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const ADocumentoCliente: String): TPedidoRetornoDTO; stdcall;
+    function efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum;const APizzaSabor: TPizzaSaborEnum; const ADocumentoCliente: String): TPedidoRetornoDTO; stdcall;
+    function ConsultarPedido(const ADocumentoCliente: String): TPedidoRetornoDTO; stdcall;
 
     constructor Create; override;
   end;
@@ -25,8 +28,12 @@ implementation
 uses
   UPedidoServiceImpl;
 
-
 { TPizzariaBackendController }
+
+function TPizzariaBackendController.ConsultarPedido(const ADocumentoCliente: String): TPedidoRetornoDTO;
+begin
+   Result := FPedidoService.ConsultarPedido(ADocumentoCliente);
+end;
 
 constructor TPizzariaBackendController.Create;
 begin
@@ -35,9 +42,10 @@ begin
   FPedidoService := TPedidoService.Create();
 end;
 
-function TPizzariaBackendController.efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const ADocumentoCliente: String): TPedidoRetornoDTO; stdcall;
+function TPizzariaBackendController.efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum;const ADocumentoCliente: String): TPedidoRetornoDTO; stdcall;
 begin
-  Result := FPedidoService.efetuarPedido(APizzaTamanho, APizzaSabor, ADocumentoCliente);
+  Result := FPedidoService.efetuarPedido(APizzaTamanho, APizzaSabor,
+    ADocumentoCliente);
 end;
 
 initialization

@@ -4,13 +4,14 @@ object Form1: TForm1
   Caption = 'Server'
   ClientHeight = 235
   ClientWidth = 399
-  Color = clBtnFace
+  Color = clHighlight
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poDesktopCenter
   OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13

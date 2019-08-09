@@ -6,7 +6,8 @@ uses
   WSDLPizzariaBackendControllerImpl in '..\pas\wm\WSDLPizzariaBackendControllerImpl.pas',
   UPedidoRetornoDTOImpl in '..\..\shared\pas\dto\UPedidoRetornoDTOImpl.pas',
   UPizzaSaborEnum in '..\..\shared\pas\enum\UPizzaSaborEnum.pas',
-  UPizzaTamanhoEnum in '..\..\shared\pas\enum\UPizzaTamanhoEnum.pas';
+  UPizzaTamanhoEnum in '..\..\shared\pas\enum\UPizzaTamanhoEnum.pas',
+  IPizzariaBackendController1 in '..\pas\wm\IPizzariaBackendController1.pas';
 
 {$R *.res}
 
