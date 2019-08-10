@@ -17,7 +17,9 @@ type
     mmRetornoWebService: TMemo;
     Label3: TLabel;
     edtEnderecoBackend: TLabeledEdit;
+    Button2: TButton;
     procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -31,7 +33,7 @@ implementation
 
 uses
   WSDLPizzariaBackendControllerImpl, Rtti, REST.JSON, UPizzaTamanhoEnum,
-  UPizzaSaborEnum;
+  UPizzaSaborEnum, System.JSON;
 
 {$R *.dfm}
 
@@ -40,7 +42,26 @@ var
   oPizzariaBackendController: IPizzariaBackendController;
 begin
   oPizzariaBackendController := WSDLPizzariaBackendControllerImpl.GetIPizzariaBackendController(edtEnderecoBackend.Text);
-  mmRetornoWebService.Text := TJson.ObjectToJsonString(oPizzariaBackendController.efetuarPedido(TRttiEnumerationType.GetValue<TPizzaTamanhoEnum>(cmbTamanhoPizza.Text), TRttiEnumerationType.GetValue<TPizzaSaborEnum>(cmbSaborPizza.Text), edtDocumentoCliente.Text));
+  mmRetornoWebService.Text := TJson.ObjectToJsonString(oPizzariaBackendController.efetuarPedido(
+    TRttiEnumerationType.GetValue<TPizzaTamanhoEnum>(cmbTamanhoPizza.Text),
+    TRttiEnumerationType.GetValue<TPizzaSaborEnum>(cmbSaborPizza.Text), edtDocumentoCliente.Text));
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+var
+  LPizzariaBackendController: IPizzariaBackendController;
+  LRetorno: TJSONValue;
+begin
+  LPizzariaBackendController := WSDLPizzariaBackendControllerImpl.
+    GetIPizzariaBackendController(edtEnderecoBackend.Text);
+  LRetorno := TJSONObject.ParseJSONValue(TJson.ObjectToJsonString(LPizzariaBackendController.BuscarPedido(
+    edtDocumentoCliente.Text)));
+  mmRetornoWebService.Lines.Add(StringOfChar('-', 10));
+  mmRetornoWebService.Lines.Add('Sabor=' + LRetorno.GetValue<string>('pizzaSabor'));
+  mmRetornoWebService.Lines.Add('Tamanho=' + LRetorno.GetValue<string>('pizzaTamanho'));
+  mmRetornoWebService.Lines.Add('Valor=' + LRetorno.GetValue<Double>('valorTotalPedido').ToString());
+  mmRetornoWebService.Lines.Add('Tempo Preparo=' + LRetorno.GetValue<Integer>('tempoPreparo').ToString());
+  mmRetornoWebService.Lines.Add(StringOfChar('-', 10));
 end;
 
 end.

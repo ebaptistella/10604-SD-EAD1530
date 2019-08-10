@@ -27,7 +27,9 @@ type
   { Invokable interfaces must derive from IInvokable }
   IPizzariaBackendController = interface(IInvokable)
     ['{D376B504-187F-4B02-B95E-50ABFB0AAC85}']
-    function efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const ADocumentoCliente: String): TPedidoRetornoDTO; stdcall;
+    function efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum;
+      const ADocumentoCliente: String): TPedidoRetornoDTO; stdcall;
+    function BuscarPedido(const ADocumentoCliente: string): TPedidoRetornoDTO; stdcall;
   end;
 
 implementation
