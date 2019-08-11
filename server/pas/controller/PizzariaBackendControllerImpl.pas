@@ -16,8 +16,10 @@ type
     FPedidoService: IPedidoService;
   public
     function efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const ADocumentoCliente: String): TPedidoRetornoDTO; stdcall;
+    function GetPedido(const ADocumentoCliente: string): TPedidoRetornoDTO; stdcall;
 
     constructor Create; override;
+
   end;
 
 implementation
@@ -38,6 +40,12 @@ end;
 function TPizzariaBackendController.efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const ADocumentoCliente: String): TPedidoRetornoDTO; stdcall;
 begin
   Result := FPedidoService.efetuarPedido(APizzaTamanho, APizzaSabor, ADocumentoCliente);
+end;
+
+function TPizzariaBackendController.GetPedido(
+  const ADocumentoCliente: string): TPedidoRetornoDTO;
+begin
+  Result := FPedidoService.GetPedido(ADocumentoCliente)
 end;
 
 initialization
