@@ -3,24 +3,26 @@ unit UFrmPrincipalImpl;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls;
+  Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics, Vcl.Controls, Vcl.Forms, Vcl.Dialogs,
+  Vcl.AppEvnts, Vcl.StdCtrls, IdHTTPWebBrokerBridge, Web.HTTPApp;
 
 type
   TForm1 = class(TForm)
-    edtDocumentoCliente: TLabeledEdit;
-    cmbTamanhoPizza: TComboBox;
+    ButtonStart: TButton;
+    ButtonStop: TButton;
+    EditPort: TEdit;
     Label1: TLabel;
-    Label2: TLabel;
-    cmbSaborPizza: TComboBox;
-    Button1: TButton;
-    mmRetornoWebService: TMemo;
-    Label3: TLabel;
-    edtEnderecoBackend: TLabeledEdit;
-    btnConsulta: TButton;
-    procedure Button1Click(Sender: TObject);
-    procedure btnConsultaClick(Sender: TObject);
+    ApplicationEvents1: TApplicationEvents;
+    ButtonOpenBrowser: TButton;
+    procedure FormCreate(Sender: TObject);
+    procedure ApplicationEvents1Idle(Sender: TObject; var Done: Boolean);
+    procedure ButtonStartClick(Sender: TObject);
+    procedure ButtonStopClick(Sender: TObject);
+    procedure ButtonOpenBrowserClick(Sender: TObject);
   private
+    FServer: TIdHTTPWebBrokerBridge;
+    procedure StartServer;
     { Private declarations }
   public
     { Public declarations }
@@ -31,26 +33,53 @@ var
 
 implementation
 
-uses
-  WSDLPizzariaBackendControllerImpl, Rtti, REST.JSON, UPizzaTamanhoEnum,
-  UPizzaSaborEnum;
-
 {$R *.dfm}
 
-procedure TForm1.Button1Click(Sender: TObject);
-var
-  oPizzariaBackendController: IPizzariaBackendController;
+uses
+  WinApi.Windows, Winapi.ShellApi;
+
+procedure TForm1.ApplicationEvents1Idle(Sender: TObject; var Done: Boolean);
 begin
-  oPizzariaBackendController := WSDLPizzariaBackendControllerImpl.GetIPizzariaBackendController(edtEnderecoBackend.Text);
-  mmRetornoWebService.Text := TJson.ObjectToJsonString(oPizzariaBackendController.efetuarPedido(TRttiEnumerationType.GetValue<TPizzaTamanhoEnum>(cmbTamanhoPizza.Text), TRttiEnumerationType.GetValue<TPizzaSaborEnum>(cmbSaborPizza.Text), edtDocumentoCliente.Text));
+  ButtonStart.Enabled := not FServer.Active;
+  ButtonStop.Enabled := FServer.Active;
+  EditPort.Enabled := not FServer.Active;
 end;
 
-procedure TForm1.btnConsultaClick(Sender: TObject);
+procedure TForm1.ButtonOpenBrowserClick(Sender: TObject);
 var
-  oPizzariaBackendController: IPizzariaBackendController;
+  LURL: string;
 begin
-  oPizzariaBackendController := WSDLPizzariaBackendControllerImpl.GetIPizzariaBackendController(edtEnderecoBackend.Text);
-  mmRetornoWebService.Text := (oPizzariaBackendController.consultaPedido(edtDocumentoCliente.Text));
+  StartServer;
+  LURL := Format('http://localhost:%s', [EditPort.Text]);
+  ShellExecute(0,
+        nil,
+        PChar(LURL), nil, nil, SW_SHOWNOACTIVATE);
+end;
+
+procedure TForm1.ButtonStartClick(Sender: TObject);
+begin
+  StartServer;
+end;
+
+procedure TForm1.ButtonStopClick(Sender: TObject);
+begin
+  FServer.Active := False;
+  FServer.Bindings.Clear;
+end;
+
+procedure TForm1.FormCreate(Sender: TObject);
+begin
+  FServer := TIdHTTPWebBrokerBridge.Create(Self);
+end;
+
+procedure TForm1.StartServer;
+begin
+  if not FServer.Active then
+  begin
+    FServer.Bindings.Clear;
+    FServer.DefaultPort := StrToInt(EditPort.Text);
+    FServer.Active := True;
+  end;
 end;
 
 end.
