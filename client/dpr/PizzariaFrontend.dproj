@@ -99,7 +99,7 @@
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
         <DCCReference Include="..\pas\ui\UFrmPrincipalImpl.pas">
-            <Form>Form1</Form>
+            <Form>FrmClientPrinc</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="..\pas\wm\WSDLPizzariaBackendControllerImpl.pas"/>

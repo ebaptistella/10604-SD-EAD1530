@@ -16,6 +16,7 @@ type
     function calcularTempoPreparo(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum): Integer;
   public
     function efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const ADocumentoCliente: String): TPedidoRetornoDTO;
+    function consultarPedido(const ADocumentoCliente: string): TPedidoRetornoDTO;
 
     constructor Create; reintroduce;
   end;
@@ -23,7 +24,8 @@ type
 implementation
 
 uses
-  UPedidoRepositoryImpl, System.SysUtils, UClienteServiceImpl;
+  UPedidoRepositoryImpl, System.SysUtils, System.DateUtils, System.Rtti,
+  UClienteServiceImpl, FireDAC.Comp.Client, Data.DB;
 
 { TPedidoService }
 
@@ -56,6 +58,29 @@ begin
   end;
 end;
 
+function TPedidoService.consultarPedido(
+  const ADocumentoCliente: string): TPedidoRetornoDTO;
+var
+  oFdQueryPedido: TFDQuery;
+begin
+  oFdQueryPedido := TFDQuery.Create(nil);
+  try
+    FPedidoRepository.consultarPedido(ADocumentoCliente, oFdQueryPedido);
+    if oFdQueryPedido.IsEmpty then
+      raise Exception.CreateFmt('O cliente com nro de documento %s não possui pedidos', [ADocumentoCliente]);
+
+    Result := TPedidoRetornoDTO.Create(
+      TRttiEnumerationType.GetValue<TPizzaTamanhoEnum>(oFdQueryPedido.FieldByName('tx_tamanho').AsString),
+      TRttiEnumerationType.GetValue<TPizzaSaborEnum>(oFdQueryPedido.FieldByName('tx_sabor').AsString),
+      oFdQueryPedido.FieldByName('vl_pedido').AsCurrency,
+      oFdQueryPedido.FieldByName('nr_tempopedido').AsInteger,
+      oFdQueryPedido.FieldByName('dt_pedido').AsDateTime,
+      oFdQueryPedido.FieldByName('dt_entrega').AsDateTime);
+  finally
+    FreeAndNil(oFdQueryPedido);
+  end;
+end;
+
 constructor TPedidoService.Create;
 begin
   inherited;
@@ -70,13 +95,19 @@ var
   oValorPedido: Currency;
   oTempoPreparo: Integer;
   oCodigoCliente: Integer;
+  oDataPedido: TDateTime;
+  oDataEntrega: TDateTime;
 begin
   oValorPedido := calcularValorPedido(APizzaTamanho);
   oTempoPreparo := calcularTempoPreparo(APizzaTamanho, APizzaSabor);
   oCodigoCliente := FClienteService.adquirirCodigoCliente(ADocumentoCliente);
+  oDataPedido := now;
+  oDataEntrega := IncMinute(oDataPedido, oTempoPreparo);
 
-  FPedidoRepository.efetuarPedido(APizzaTamanho, APizzaSabor, oValorPedido, oTempoPreparo, oCodigoCliente);
-  Result := TPedidoRetornoDTO.Create(APizzaTamanho, APizzaSabor, oValorPedido, oTempoPreparo);
+  FPedidoRepository.efetuarPedido(APizzaTamanho, APizzaSabor, oValorPedido,
+    oTempoPreparo, oCodigoCliente, oDataPedido, oDataEntrega);
+  Result := TPedidoRetornoDTO.Create(APizzaTamanho, APizzaSabor, oValorPedido,
+    oTempoPreparo, oDataPedido, oDataEntrega);
 end;
 
 end.
