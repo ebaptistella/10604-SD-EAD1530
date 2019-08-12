@@ -13,9 +13,11 @@ type
   public
     procedure efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const AValorPedido: Currency;
       const ATempoPreparo: Integer; const ACodigoCliente: Integer);
-
+    procedure consultarPedido(const ADocumentoCliente: string;
+      out AFDQuery: TFDQuery);
     constructor Create; reintroduce;
     destructor Destroy; override;
+
   end;
 
 implementation
@@ -26,9 +28,26 @@ uses
 const
   CMD_INSERT_PEDIDO
     : String =
-    'INSERT INTO tb_pedido (cd_cliente, dt_pedido, dt_entrega, vl_pedido, nr_tempopedido) VALUES (:pCodigoCliente, :pDataPedido, :pDataEntrega, :pValorPedido, :pTempoPedido)';
+      'INSERT INTO tb_pedido (cd_cliente, dt_pedido, dt_entrega, vl_pedido, ' +
+      'nr_tempopedido, tamanho, sabor) VALUES (:pCodigoCliente, :pDataPedido, ' +
+      ':pDataEntrega, :pValorPedido, :pTempoPedido, :pTamanho, :pSabor)';
+  CMD_CONSULTAR_PEDIDO
+    : String =
+      'SELECT tamanho, sabor, vl_pedido, nr_tempopedido from tb_pedido t1 ' +
+      'INNER JOIN tb_cliente t2 ON t1.cd_cliente = t2.id where ' +
+      't2.nr_documento = :pDocumentoCliente order by t1.id desc limit 1';
 
   { TPedidoRepository }
+
+procedure TPedidoRepository.consultarPedido(const ADocumentoCliente: string;
+  out AFDQuery: TFDQuery);
+begin
+  AFDQuery.Connection := FDBConnection.getDefaultConnection;
+  AFDQuery.SQL.Text := CMD_CONSULTAR_PEDIDO;
+  AFDQuery.ParamByName('pDocumentoCliente').AsString := ADocumentoCliente;
+  AFDQuery.Prepare;
+  AFDQuery.Open;
+end;
 
 constructor TPedidoRepository.Create;
 begin
@@ -55,6 +74,8 @@ begin
   FFDQuery.ParamByName('pDataEntrega').AsDateTime := now();
   FFDQuery.ParamByName('pValorPedido').AsCurrency := AValorPedido;
   FFDQuery.ParamByName('pTempoPedido').AsInteger := ATempoPreparo;
+  FFDQuery.ParamByName('pTamanho').AsInteger := Integer(APizzaTamanho);
+  FFDQuery.ParamByName('pSabor').AsInteger :=  Integer(APizzaSabor);
 
   FFDQuery.Prepare;
   FFDQuery.ExecSQL(True);
