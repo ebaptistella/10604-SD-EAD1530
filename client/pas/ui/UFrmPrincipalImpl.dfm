@@ -94,7 +94,7 @@ object Form1: TForm1
     EditLabel.Height = 13
     EditLabel.Caption = 'Endere'#231'o Pizzaria Backend:'
     TabOrder = 5
-    Text = 'http://localhost:8081/soap/IPizzariaBackendController'
+    Text = 'http://localhost:8080/soap/IPizzariaBackendController'
   end
   object Button2: TButton
     Left = 127
