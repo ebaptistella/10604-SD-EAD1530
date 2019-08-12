@@ -36,7 +36,7 @@ begin
   FFDQuery.ParamByName('pDocumentoCliente').AsString := ADocumentoCliente;
 
   FFDQuery.Prepare;
-  FFDQuery.ExecSQL(True);
+  FFDQuery.ExecSQL();
 end;
 
 function TClienteRepository.adquirirCodigoCliente(const ADocumentoCliente: string): Integer;

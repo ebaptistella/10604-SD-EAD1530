@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 0
-  Top = 0
+  Left = 439
+  Top = 274
   Caption = 'Client'
   ClientHeight = 250
   ClientWidth = 596
@@ -11,6 +11,7 @@ object Form1: TForm1
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poDesigned
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -53,7 +54,7 @@ object Form1: TForm1
     Items.Strings = (
       'enPequena'
       'enMedia'
-      'enGrange')
+      'enGrande')
   end
   object cmbSaborPizza: TComboBox
     Left = 16
@@ -67,8 +68,8 @@ object Form1: TForm1
       'enPortuguesa')
   end
   object Button1: TButton
-    Left = 104
-    Top = 216
+    Left = 16
+    Top = 217
     Width = 105
     Height = 25
     Caption = '&1 - Fazer Pedido'
@@ -81,7 +82,7 @@ object Form1: TForm1
     Width = 265
     Height = 217
     Lines.Strings = (
-      'mmRetornoWebService')
+      '')
     TabOrder = 4
   end
   object edtEnderecoBackend: TLabeledEdit
@@ -93,6 +94,15 @@ object Form1: TForm1
     EditLabel.Height = 13
     EditLabel.Caption = 'Endere'#231'o Pizzaria Backend:'
     TabOrder = 5
-    Text = 'http://localhost:8080/soap/IPizzariaBackendController'
+    Text = 'http://localhost:8081/soap/IPizzariaBackendController'
+  end
+  object Button2: TButton
+    Left = 127
+    Top = 217
+    Width = 105
+    Height = 25
+    Caption = '&2 - Consultar Pedido'
+    TabOrder = 6
+    OnClick = Button2Click
   end
 end
