@@ -14,6 +14,7 @@ type
     function adquirirCodigoCliente(const ADocumentoCliente: string): Integer;
     procedure adicionarCliente(const ADocumentoCliente: String);
 
+
     constructor Create; reintroduce;
     destructor Destroy; override;
   end;
@@ -26,6 +27,7 @@ uses
 const
   CMD_INSERT_CLIENTE: String = 'insert into tb_cliente (nr_documento) values (:pDocumentoCliente)';
   CMD_ARDQUIRIR_CLIENTE: String = 'select id from tb_cliente where nr_documento = :pDocumentoCliente';
+
 
   { TClienteRepository }
 
@@ -41,7 +43,7 @@ end;
 
 function TClienteRepository.adquirirCodigoCliente(const ADocumentoCliente: string): Integer;
 begin
-  FFDQuery.SQL.Text := CMD_ARDQUIRIR_CLIENTE;
+    FFDQuery.SQL.Text := CMD_ARDQUIRIR_CLIENTE;
 
   FFDQuery.ParamByName('pDocumentoCliente').AsString := ADocumentoCliente;
 
@@ -68,5 +70,6 @@ begin
   FFDQuery.Free;
   inherited;
 end;
+
 
 end.
