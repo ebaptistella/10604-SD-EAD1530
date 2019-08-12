@@ -3,6 +3,8 @@ unit UPedidoServiceImpl;
 interface
 
 uses
+  Data.DB,
+  System.StrUtils,
   UPedidoServiceIntf, UPizzaTamanhoEnum, UPizzaSaborEnum,
   UPedidoRepositoryIntf, UPedidoRetornoDTOImpl, UClienteServiceIntf;
 
@@ -17,6 +19,9 @@ type
   public
     function efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const ADocumentoCliente: String): TPedidoRetornoDTO;
     function consultarPedido(const ADocumentoCliente:string):TPedidoRetornoDTO;stdcall;
+
+    function GetTamanho(const ATamanho : string): TPizzaTamanhoEnum;
+    function GetSabor(const ASabor : string):TPizzaSaborEnum;
 
     constructor Create; reintroduce;
   end;
@@ -63,16 +68,17 @@ function TPedidoService.consultarPedido(
 var
   oFDQuery : TFDQuery;
 begin
+
   try
     oFDQuery := TFDQuery.Create(nil);
     FPedidoRepository.consultarPedido(ADocumentoCliente, oFDQuery);
     if oFDQuery.IsEmpty then
       raise Exception.Create('O Cliente com o numero de documento ' + ADocumentoCliente + ' não possui pedidos.')
     else
-      Result := TPedidoRetornoDTO.Create(TPizzaTamanhoEnum(oFDQuery.FieldByName('tamanho').AsInteger) ,
-                                        TPizzaSaborEnum(oFDQuery.FieldByName('sabor').AsInteger),
-                                        oFDQuery.FieldByName('vlr_pedido').AsCurrency,
-                                        oFDQuery.FieldByName('vlr_tempo').AsInteger);
+      Result := TPedidoRetornoDTO.Create(GetTamanho(oFDQuery.FieldByName('tamanho').AsString) ,
+                                        GetSabor(oFDQuery.FieldByName('sabor').AsString),
+                                        oFDQuery.FieldByName('pedido_valor').AsCurrency,
+                                        oFDQuery.FieldByName('pedido_tempo').AsInteger);
   finally
     oFDQuery.Free;
   end;
@@ -100,6 +106,16 @@ begin
 
   FPedidoRepository.efetuarPedido(APizzaTamanho, APizzaSabor, oValorPedido, oTempoPreparo, oCodigoCliente);
   Result := TPedidoRetornoDTO.Create(APizzaTamanho, APizzaSabor, oValorPedido, oTempoPreparo);
+end;
+
+function TPedidoService.GetSabor(const ASabor: string): TPizzaSaborEnum;
+begin
+  Result := TPizzaSaborEnum(AnsiIndexStr(ASabor,['enCalabresa', 'enMarguerita', 'enPortuguesa']));
+end;
+
+function TPedidoService.GetTamanho(const ATamanho: string): TPizzaTamanhoEnum;
+begin
+  Result := TPizzaTamanhoEnum(AnsiIndexStr(ATamanho,['enPequena', 'enMedia', 'enGrande']));
 end;
 
 end.
