@@ -13,13 +13,13 @@ type
     Label1: TLabel;
     Label2: TLabel;
     cmbSaborPizza: TComboBox;
-    Button1: TButton;
+    btnFazerPedido: TButton;
     mmRetornoWebService: TMemo;
     Label3: TLabel;
     edtEnderecoBackend: TLabeledEdit;
-    Button2: TButton;
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
+    btnResumoPedido: TButton;
+    procedure btnFazerPedidoClick(Sender: TObject);
+    procedure btnResumoPedidoClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -40,7 +40,7 @@ uses
 
 {$R *.dfm}
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TForm1.btnFazerPedidoClick(Sender: TObject);
 var
   oPizzariaBackendController: IPizzariaBackendController;
 begin
@@ -48,16 +48,15 @@ begin
   mmRetornoWebService.Text := TJson.ObjectToJsonString(oPizzariaBackendController.efetuarPedido(TRttiEnumerationType.GetValue<TPizzaTamanhoEnum>(cmbTamanhoPizza.Text), TRttiEnumerationType.GetValue<TPizzaSaborEnum>(cmbSaborPizza.Text), edtDocumentoCliente.Text));
 end;
 
-procedure TForm1.Button2Click(Sender: TObject);
+procedure TForm1.btnResumoPedidoClick(Sender: TObject);
 var
   oPizzariaBackendController1: IPizzariaBackendController;
   obj : TJsonObject;
 begin
   if edtDocumentoCliente.Text = EmptyStr then
-    raise Exception.Create('Você deve informar o documento para consultar');
+    raise Exception.Create('Você deve informar o documento para consultar os pedidos');
 
   oPizzariaBackendController1 := WSDLPizzariaBackendControllerImpl.GetIPizzariaBackendController(edtEnderecoBackend.Text);
-//  mmRetornoWebService.Text := TJson.ObjectToJsonString(oPizzariaBackendController1.consultarPedido(edtDocumentoCliente.Text));
   Obj := TJson.ObjectToJsonObject(oPizzariaBackendController1.consultarPedido(edtDocumentoCliente.Text));
   mmRetornoWebService.Lines.Clear;
   mmRetornoWebService.Lines.Add('----------- Seu pedido ------------');
@@ -66,12 +65,6 @@ begin
   mmRetornoWebService.Lines.Add('Valor Total....:'  + Obj.Get('valorTotalPedido').JsonValue.Value);
   mmRetornoWebService.Lines.Add('Tempo Prep.....:'  + Obj.Get('tempoPreparo').JsonValue.Value);
   mmRetornoWebService.Lines.Add('-----------------------------------');
-
- (*
-
- {"pizzaTamanho":"enPequena","pizzaSabor":"enMarguerita","valorTotalPedido":20,"tempoPreparo":15,"dataContext":null}
- *)
 end;
-
 
 end.

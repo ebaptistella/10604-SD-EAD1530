@@ -1,9 +1,11 @@
 object Form1: TForm1
   Left = 0
   Top = 0
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
   Caption = 'Client'
-  ClientHeight = 645
-  ClientWidth = 1079
+  ClientHeight = 272
+  ClientWidth = 606
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,6 +13,7 @@ object Form1: TForm1
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poDesktopCenter
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
@@ -37,7 +40,7 @@ object Form1: TForm1
   object edtDocumentoCliente: TLabeledEdit
     Left = 16
     Top = 64
-    Width = 193
+    Width = 225
     Height = 21
     EditLabel.Width = 98
     EditLabel.Height = 13
@@ -47,7 +50,7 @@ object Form1: TForm1
   object cmbTamanhoPizza: TComboBox
     Left = 16
     Top = 109
-    Width = 193
+    Width = 225
     Height = 21
     TabOrder = 1
     Items.Strings = (
@@ -58,7 +61,7 @@ object Form1: TForm1
   object cmbSaborPizza: TComboBox
     Left = 16
     Top = 152
-    Width = 193
+    Width = 225
     Height = 21
     TabOrder = 2
     Items.Strings = (
@@ -66,14 +69,14 @@ object Form1: TForm1
       'enMarguerita'
       'enPortuguesa')
   end
-  object Button1: TButton
+  object btnFazerPedido: TButton
     Left = 8
     Top = 217
     Width = 105
     Height = 25
     Caption = '&1 - Fazer Pedido'
     TabOrder = 3
-    OnClick = Button1Click
+    OnClick = btnFazerPedidoClick
   end
   object mmRetornoWebService: TMemo
     Left = 312
@@ -95,13 +98,13 @@ object Form1: TForm1
     TabOrder = 5
     Text = 'http://localhost:8080/soap/IPizzariaBackendController'
   end
-  object Button2: TButton
+  object btnResumoPedido: TButton
     Left = 119
     Top = 217
-    Width = 75
+    Width = 122
     Height = 25
-    Caption = 'Button2'
+    Caption = '&2 - Resumo do pedido'
     TabOrder = 6
-    OnClick = Button2Click
+    OnClick = btnResumoPedidoClick
   end
 end

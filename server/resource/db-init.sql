@@ -13,7 +13,7 @@ create table if not exists tb_cliente (
 );
 
 
-create view V_pedidos as
+create view if not exists V_pedidos as
 select
 	c.nr_documento as documento,
 	c.id as cliente_codigo,
