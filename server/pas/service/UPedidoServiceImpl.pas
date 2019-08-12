@@ -16,6 +16,7 @@ type
     function calcularTempoPreparo(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum): Integer;
   public
     function efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const ADocumentoCliente: String): TPedidoRetornoDTO;
+    function consultarPedido(const ADocumentoCliente: String): TPedidoRetornoDTO;
 
     constructor Create; reintroduce;
   end;
@@ -54,6 +55,16 @@ begin
     enGrande:
       Result := 40;
   end;
+end;
+
+function TPedidoService.consultarPedido(Const ADocumentoCliente: String): TPedidoRetornoDTO;
+var
+  Ped : TPedidoRetornoDTO;
+begin
+  Ped := FPedidoRepository.consultarpedido(ADocumentoCliente);
+  ped.ValorTotalPedido := ped.ValorTotalPedido + ord(ped.PizzaTamanho);
+  ped.TempoPreparo :=  ped.TempoPreparo + (ord(ped.PizzaTamanho) + ord(ped.PizzaSabor));
+  result := Ped;
 end;
 
 constructor TPedidoService.Create;

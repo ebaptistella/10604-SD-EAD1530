@@ -3,6 +3,8 @@ create table if not exists tb_pedido (
   dt_pedido timestamp not null,
   dt_entrega timestamp,
   nr_tempopedido integer not null,
+  sabor integer not null,
+  tamanho integer not null,
   vl_pedido decimal(9,2) not null,
   cd_cliente integer not null
 );
