@@ -6,7 +6,7 @@ interface
 
 uses Soap.InvokeRegistry, System.Types, Soap.XSBuiltIns, UPizzaTamanhoEnum,
   UPizzaSaborEnum, UPedidoRetornoDTOImpl;
-
+//
 type
 
   TEnumTest = (etNone, etAFew, etSome, etAlot);
