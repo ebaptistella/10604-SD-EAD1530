@@ -37,7 +37,7 @@ object Form1: TForm1
   object edtDocumentoCliente: TLabeledEdit
     Left = 16
     Top = 64
-    Width = 193
+    Width = 161
     Height = 21
     EditLabel.Width = 98
     EditLabel.Height = 13
@@ -47,18 +47,18 @@ object Form1: TForm1
   object cmbTamanhoPizza: TComboBox
     Left = 16
     Top = 109
-    Width = 193
+    Width = 161
     Height = 21
     TabOrder = 1
     Items.Strings = (
       'enPequena'
       'enMedia'
-      'enGrange')
+      'enGrande')
   end
   object cmbSaborPizza: TComboBox
     Left = 16
     Top = 152
-    Width = 193
+    Width = 161
     Height = 21
     TabOrder = 2
     Items.Strings = (
@@ -67,8 +67,8 @@ object Form1: TForm1
       'enPortuguesa')
   end
   object Button1: TButton
-    Left = 104
-    Top = 216
+    Left = 72
+    Top = 217
     Width = 105
     Height = 25
     Caption = '&1 - Fazer Pedido'
@@ -94,5 +94,14 @@ object Form1: TForm1
     EditLabel.Caption = 'Endere'#231'o Pizzaria Backend:'
     TabOrder = 5
     Text = 'http://localhost:8080/soap/IPizzariaBackendController'
+  end
+  object Button2: TButton
+    Left = 183
+    Top = 62
+    Width = 107
+    Height = 25
+    Caption = 'Consultar pedido'
+    TabOrder = 6
+    OnClick = Button2Click
   end
 end
