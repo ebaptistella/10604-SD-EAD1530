@@ -11,6 +11,7 @@ type
     ['{51E66D72-E705-6B07-06A2-EE419B5B1649}']
     function efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const ADocumentoCliente: String)
       : TPedidoRetornoDTO; stdcall;
+    function consultarPedido(const ADocumentoCliente: String): TPedidoRetornoDTO; stdcall;
   end;
 
 function GetIPizzariaBackendController(const AEnderecoServidor: String): IPizzariaBackendController;
@@ -43,6 +44,7 @@ initialization
 { IPizzariaBackendController }
 InvRegistry.RegisterInterface(TypeInfo(IPizzariaBackendController), 'urn:PizzariaBackendControllerIntf-IPizzariaBackendController', '');
 InvRegistry.RegisterDefaultSOAPAction(TypeInfo(IPizzariaBackendController), 'urn:PizzariaBackendControllerIntf-IPizzariaBackendController#efetuarPedido');
+InvRegistry.RegisterDefaultSOAPAction(TypeInfo(IPizzariaBackendController), 'urn:PizzariaBackendControllerIntf-IPizzariaBackendController#consultarPedido');
 RemClassRegistry.RegisterXSClass(TPedidoRetornoDTO, 'urn:UPedidoRetornoDTOImpl', 'TPedidoRetornoDTO');
 RemClassRegistry.RegisterXSInfo(TypeInfo(TPizzaSaborEnum), 'urn:UPizzaSaborEnum', 'TPizzaSaborEnum');
 RemClassRegistry.RegisterXSInfo(TypeInfo(TPizzaTamanhoEnum), 'urn:UPizzaTamanhoEnum', 'TPizzaTamanhoEnum');

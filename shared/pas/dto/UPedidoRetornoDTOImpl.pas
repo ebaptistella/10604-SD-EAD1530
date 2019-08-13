@@ -19,7 +19,8 @@ type
     property TempoPreparo: Integer read FTempoPreparo write FTempoPreparo;
   public
     constructor Create(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const AValorTotalPedido: Currency;
-      const ATempoPreparo: Integer); reintroduce;
+      const ATempoPreparo: Integer);  reintroduce ;
+
   end;
 
 implementation
@@ -34,5 +35,7 @@ begin
   FValorTotalPedido := AValorTotalPedido;
   FTempoPreparo := ATempoPreparo;
 end;
+
+
 
 end.

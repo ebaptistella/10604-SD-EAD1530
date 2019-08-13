@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<ProjectSortOrder AutoSort="0" SortType="0">
+    <File Path="..\..\server"/>
+    <File Path="..\pas"/>
+    <File Path="..\pas\controller"/>
+    <File Path="..\pas\controller\PizzariaBackendControllerImpl.pas"/>
+    <File Path="..\pas\controller\PizzariaBackendControllerIntf.pas"/>
+    <File Path="..\pas\db-connection"/>
+    <File Path="..\pas\db-connection\UDBConnectionImpl.pas"/>
+    <File Path="..\pas\db-connection\UDBConnectionIntf.pas"/>
+    <File Path="..\pas\repository"/>
+    <File Path="..\pas\repository\UClienteRepositoryImpl.pas"/>
+    <File Path="..\pas\repository\UClienteRepositoryIntf.pas"/>
+    <File Path="..\pas\repository\UPedidoRepositoryImpl.pas"/>
+    <File Path="..\pas\repository\UPedidoRepositoryIntf.pas"/>
+    <File Path="..\pas\service"/>
+    <File Path="..\pas\service\UClienteServiceImpl.pas"/>
+    <File Path="..\pas\service\UClienteServiceIntf.pas"/>
+    <File Path="..\pas\service\UPedidoServiceImpl.pas"/>
+    <File Path="..\pas\service\UPedidoServiceIntf.pas"/>
+    <File Path="..\pas\ui"/>
+    <File Path="..\pas\ui\UFrmPrincipalImpl.pas"/>
+    <File Path="..\pas\ui\UFrmPrincipalImpl.dfm"/>
+    <File Path="..\pas\wm"/>
+    <File Path="..\pas\wm\WMPizzariaBackend.pas"/>
+    <File Path="..\pas\wm\WMPizzariaBackend.dfm"/>
+    <File Path="..\resource"/>
+    <File Path="..\resource\db-init.sql"/>
+    <File Path="..\..\..\10604-SD-EAD1530"/>
+    <File Path="..\..\shared"/>
+    <File Path="..\..\shared\pas"/>
+    <File Path="..\..\shared\pas\dto"/>
+    <File Path="..\..\shared\pas\dto\UPedidoRetornoDTOImpl.pas"/>
+    <File Path="..\..\shared\pas\enum"/>
+    <File Path="..\..\shared\pas\enum\UPizzaSaborEnum.pas"/>
+    <File Path="..\..\shared\pas\enum\UPizzaTamanhoEnum.pas"/>
+  </ProjectSortOrder>
+</BorlandProject>
