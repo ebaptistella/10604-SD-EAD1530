@@ -13,7 +13,7 @@ type
   public
     procedure efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const AValorPedido: Currency;
       const ATempoPreparo: Integer; const ACodigoCliente: Integer);
-
+    procedure consultarPedido(const ADocumentoCliente: string; out AFDQuery : TFDQuery);
     constructor Create; reintroduce;
     destructor Destroy; override;
   end;
@@ -27,8 +27,20 @@ const
   CMD_INSERT_PEDIDO
     : String =
     'INSERT INTO tb_pedido (cd_cliente, dt_pedido, dt_entrega, vl_pedido, nr_tempopedido) VALUES (:pCodigoCliente, :pDataPedido, :pDataEntrega, :pValorPedido, :pTempoPedido)';
+  CM_CONSULTAR_PEDIDO: String = 'select ''enPequena'' as tx_tamanhopizza, ''enCalabresa'' as tx_saborpizza, vl_pedido, nr_tempopedido' +
+                                '  from tb_pedido ti inner join tb_cliente t2 on t1.cd_cliente = t2.id where t2.nr_documento = :pDocumentoCliente order by tl.id desc limit 1';
 
   { TPedidoRepository }
+
+procedure TPedidoRepository.consultarPedido(const ADocumentoCliente: string;
+  out AFDQuery: TFDQuery);
+begin
+  AFDQuery.Connection := FDBConnection.getDefaultConnection;
+  AFDQuery.SQL.Text := CM_CONSULTAR_PEDIDO;
+  AFDQuery.ParamByName('pDocumentoCliente').AsString := ADocumentoCliente;
+  AFDQuery.Prepare;
+  AFDQuery.Open;
+end;
 
 constructor TPedidoRepository.Create;
 begin

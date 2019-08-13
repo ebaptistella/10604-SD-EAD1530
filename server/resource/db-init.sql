@@ -7,6 +7,8 @@ create table if not exists tb_pedido (
   cd_cliente integer not null
 );
 
+// Incluir Campos
+
 create table if not exists tb_cliente (
   id integer not null primary key autoincrement,
   nr_documento varchar(15) not null
