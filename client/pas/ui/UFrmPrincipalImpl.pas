@@ -33,22 +33,29 @@ implementation
 
 uses
   WSDLPizzariaBackendControllerImpl, Rtti, REST.JSON, UPizzaTamanhoEnum,
-  UPizzaSaborEnum;
+  UPizzaSaborEnum, UPedidoRetornoDTOImpl;
 
 {$R *.dfm}
 
 procedure TForm1.btn_ConsultaClick(Sender: TObject);
 var
   oPizzariaBackendController: IPizzariaBackendController;
+  oDTO : TPedidoRetornoDTO;
 begin
-  if edtDocumentoCliente.Text = '' then
-  begin
-    ShowMessage('Informe o Documento para a Consulta.');
-    Exit;
-  end;
+  if edtDocumentoCliente.Text = EmptyStr then
+    exit;
 
-//  oPizzariaBackendController := WSDLPizzariaBackendControllerImpl.GetIPizzariaBackendController(edtEnderecoBackend.Text);
-//  mmRetornoWebService.Text   := TJson.ObjectToJsonString(oPizzariaBackendController.consultarPedido(edtDocumentoCliente.Text));
+  oPizzariaBackendController := WSDLPizzariaBackendControllerImpl.GetIPizzariaBackendController(edtEnderecoBackend.Text);
+
+  oDTO := oPizzariaBackendController.consultarPedido(edtDocumentoCliente.Text);
+  mmRetornoWebService.Clear;
+
+  mmRetornoWebService.Lines.Add('Tamanho: '+ Copy(TRttiEnumerationType.GetName<TPizzaTamanhoEnum>(oDTO.PizzaTamanho),
+                                                           3,length(TRttiEnumerationType.GetName<TPizzaTamanhoEnum>(oDTO.PizzaTamanho))));
+  mmRetornoWebService.Lines.Add('Sabor: '+ Copy(TRttiEnumerationType.GetName<TPizzaSaborEnum>(oDTO.PizzaSabor),
+                                                           3,length(TRttiEnumerationType.GetName<TPizzaSaborEnum>(oDTO.PizzaSabor))));
+  mmRetornoWebService.Lines.Add('Preço: '+ FormatCurr('R$0.00',oDTO.ValorTotalPedido));
+  mmRetornoWebService.Lines.Add('Tempo de Preparo: '+ oDTO.TempoPreparo.ToString + ' minutos.');
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);

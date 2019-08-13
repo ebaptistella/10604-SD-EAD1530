@@ -3,7 +3,7 @@ unit UPedidoRepositoryImpl;
 interface
 
 uses
-  UPedidoRepositoryIntf, UPizzaTamanhoEnum, UPizzaSaborEnum, UDBConnectionIntf, FireDAC.Comp.Client;
+  UPedidoRepositoryIntf, UPizzaTamanhoEnum, UPizzaSaborEnum, UDBConnectionIntf, FireDAC.Comp.Client, TypInfo, UPedidoRetornoDTOImpl;
 
 type
   TPedidoRepository = class(TInterfacedObject, IPedidoRepository)
@@ -67,6 +67,8 @@ begin
   FFDQuery.ParamByName('pDataEntrega').AsDateTime := now();
   FFDQuery.ParamByName('pValorPedido').AsCurrency := AValorPedido;
   FFDQuery.ParamByName('pTempoPedido').AsInteger := ATempoPreparo;
+  FFDQuery.ParamByName('pTamanho').AsString := GetEnumName(TypeInfo(TPizzaTamanhoEnum),integer(APizzaTamanho));
+  FFDQuery.ParamByName('pSabor').AsString := GetEnumName(TypeInfo(TPizzaSaborEnum),integer(APizzaSabor));
 
   FFDQuery.Prepare;
   FFDQuery.ExecSQL(True);
