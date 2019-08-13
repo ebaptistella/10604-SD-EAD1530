@@ -14,22 +14,22 @@ object Form1: TForm1
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
-    Left = 16
-    Top = 93
+    Left = 24
+    Top = 117
     Width = 90
     Height = 13
     Caption = 'Tamanho da Pizza:'
   end
   object Label2: TLabel
-    Left = 16
-    Top = 136
+    Left = 24
+    Top = 160
     Width = 74
     Height = 13
     Caption = 'Sabor da Pizza:'
   end
   object Label3: TLabel
-    Left = 312
-    Top = 8
+    Left = 224
+    Top = 45
     Width = 118
     Height = 13
     Caption = 'Retorno do WebService:'
@@ -37,7 +37,7 @@ object Form1: TForm1
   object edtDocumentoCliente: TLabeledEdit
     Left = 16
     Top = 64
-    Width = 193
+    Width = 169
     Height = 21
     EditLabel.Width = 98
     EditLabel.Height = 13
@@ -45,20 +45,20 @@ object Form1: TForm1
     TabOrder = 0
   end
   object cmbTamanhoPizza: TComboBox
-    Left = 16
-    Top = 109
-    Width = 193
+    Left = 24
+    Top = 133
+    Width = 161
     Height = 21
     TabOrder = 1
     Items.Strings = (
       'enPequena'
       'enMedia'
-      'enGrange')
+      'enGrande')
   end
   object cmbSaborPizza: TComboBox
-    Left = 16
-    Top = 152
-    Width = 193
+    Left = 24
+    Top = 176
+    Width = 161
     Height = 21
     TabOrder = 2
     Items.Strings = (
@@ -67,8 +67,8 @@ object Form1: TForm1
       'enPortuguesa')
   end
   object Button1: TButton
-    Left = 104
-    Top = 216
+    Left = 72
+    Top = 217
     Width = 105
     Height = 25
     Caption = '&1 - Fazer Pedido'
@@ -76,23 +76,32 @@ object Form1: TForm1
     OnClick = Button1Click
   end
   object mmRetornoWebService: TMemo
-    Left = 312
-    Top = 25
-    Width = 265
-    Height = 217
+    Left = 224
+    Top = 64
+    Width = 353
+    Height = 178
     Lines.Strings = (
       'mmRetornoWebService')
     TabOrder = 4
   end
   object edtEnderecoBackend: TLabeledEdit
     Left = 16
-    Top = 24
-    Width = 273
+    Top = 19
+    Width = 561
     Height = 21
     EditLabel.Width = 131
     EditLabel.Height = 13
     EditLabel.Caption = 'Endere'#231'o Pizzaria Backend:'
     TabOrder = 5
     Text = 'http://localhost:8080/soap/IPizzariaBackendController'
+  end
+  object Button2: TButton
+    Left = 78
+    Top = 86
+    Width = 107
+    Height = 25
+    Caption = 'Consultar pedido'
+    TabOrder = 6
+    OnClick = Button2Click
   end
 end
