@@ -17,7 +17,9 @@ type
     mmRetornoWebService: TMemo;
     Label3: TLabel;
     edtEnderecoBackend: TLabeledEdit;
+    Button2: TButton;
     procedure Button1Click(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -39,8 +41,26 @@ procedure TForm1.Button1Click(Sender: TObject);
 var
   oPizzariaBackendController: IPizzariaBackendController;
 begin
-  oPizzariaBackendController := WSDLPizzariaBackendControllerImpl.GetIPizzariaBackendController(edtEnderecoBackend.Text);
-  mmRetornoWebService.Text := TJson.ObjectToJsonString(oPizzariaBackendController.efetuarPedido(TRttiEnumerationType.GetValue<TPizzaTamanhoEnum>(cmbTamanhoPizza.Text), TRttiEnumerationType.GetValue<TPizzaSaborEnum>(cmbSaborPizza.Text), edtDocumentoCliente.Text));
+  oPizzariaBackendController := WSDLPizzariaBackendControllerImpl
+                                  .GetIPizzariaBackendController(edtEnderecoBackend.Text);
+  mmRetornoWebService.Text := TJson
+                                .ObjectToJsonString(
+                                  oPizzariaBackendController.efetuarPedido(
+                                    TRttiEnumerationType.GetValue<TPizzaTamanhoEnum>(cmbTamanhoPizza.Text),
+                                    TRttiEnumerationType.GetValue<TPizzaSaborEnum>(cmbSaborPizza.Text),
+                                    edtDocumentoCliente.Text));
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+var
+  oPizzariaBackendController: IPizzariaBackendController;
+begin
+  oPizzariaBackendController := WSDLPizzariaBackendControllerImpl
+                                  .GetIPizzariaBackendController(edtEnderecoBackend.Text);
+  mmRetornoWebService.Text := TJson
+                                .ObjectToJsonString(
+                                  oPizzariaBackendController.
+                                    consultarPedido(edtDocumentoCliente.Text));
 end;
 
 end.
