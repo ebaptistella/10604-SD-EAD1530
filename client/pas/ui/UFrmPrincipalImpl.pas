@@ -52,7 +52,8 @@ begin
 
   oPizzariaBackendController := WSDLPizzariaBackendControllerImpl.GetIPizzariaBackendController(edtEnderecoBackend.Text);
   mmRetornoWebService.Text := TJson.ObjectToJsonString(oPizzariaBackendController.ConsultarPedido(edtDocumentoCliente.Text));
-end;
+
+  end;
 
 
 

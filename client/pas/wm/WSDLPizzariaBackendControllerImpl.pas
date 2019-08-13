@@ -15,8 +15,6 @@ type
   end;
 
 
-
-
 function GetIPizzariaBackendController(const AEnderecoServidor: String): IPizzariaBackendController;
 
 implementation

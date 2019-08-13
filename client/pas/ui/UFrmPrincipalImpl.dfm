@@ -96,7 +96,7 @@ object Form1: TForm1
     Text = 'http://localhost:8080/soap/IPizzariaBackendController'
   end
   object Button2: TButton
-    Left = 78
+    Left = 76
     Top = 86
     Width = 107
     Height = 25
