@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="8e885a33-3c5f-4219-aa42-d0bb607f1d4c" activeEnvironment="Default" name="Pizzaria" resourceRoot="" soapui-version="5.5.0" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="ea7f4928-2ba2-4747-9b52-27523cf3a3ce" wsaVersion="NONE" name="IPizzariaBackendControllerbinding" type="wsdl" bindingName="{http://tempuri.org/}IPizzariaBackendControllerbinding" soapVersion="1_1" anonymous="optional" definition="http://localhost:8080/wsdl/IPizzariaBackendController" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://localhost:8080/wsdl/IPizzariaBackendController"><con:part><con:url>http://localhost:8080/wsdl/IPizzariaBackendController</con:url><con:content><![CDATA[<definitions name="IPizzariaBackendControllerservice" targetNamespace="http://tempuri.org/" xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://tempuri.org/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:ns1="urn:UPizzaTamanhoEnum" xmlns:ns2="urn:UPizzaSaborEnum" xmlns:ns3="urn:UPedidoRetornoDTOImpl">
+  <types>
+    <xs:schema targetNamespace="urn:UPizzaTamanhoEnum" xmlns="urn:UPizzaTamanhoEnum">
+      <xs:simpleType name="TPizzaTamanhoEnum">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="enPequena"/>
+          <xs:enumeration value="enMedia"/>
+          <xs:enumeration value="enGrande"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:schema>
+    <xs:schema targetNamespace="urn:UPizzaSaborEnum" xmlns="urn:UPizzaSaborEnum">
+      <xs:simpleType name="TPizzaSaborEnum">
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="enCalabresa"/>
+          <xs:enumeration value="enMarguerita"/>
+          <xs:enumeration value="enPortuguesa"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:schema>
+    <xs:schema targetNamespace="urn:UPedidoRetornoDTOImpl" xmlns="urn:UPedidoRetornoDTOImpl">
+      <xs:complexType name="TPedidoRetornoDTO">
+        <sequence xmlns="http://www.w3.org/2001/XMLSchema">
+          <xs:element name="PizzaTamanho" type="ns1:TPizzaTamanhoEnum"/>
+          <xs:element name="PizzaSabor" type="ns2:TPizzaSaborEnum"/>
+          <xs:element name="ValorTotalPedido" type="xs:double"/>
+          <xs:element name="TempoPreparo" type="xs:int"/>
+        </sequence>
+      </xs:complexType>
+    </xs:schema>
+  </types>
+  <message name="efetuarPedido0Request">
+    <part name="APizzaTamanho" type="ns1:TPizzaTamanhoEnum"/>
+    <part name="APizzaSabor" type="ns2:TPizzaSaborEnum"/>
+    <part name="ADocumentoCliente" type="xs:string"/>
+  </message>
+  <message name="efetuarPedido0Response">
+    <part name="return" type="ns3:TPedidoRetornoDTO"/>
+  </message>
+  <message name="consultarPedido1Request">
+    <part name="ADocumentoCliente" type="xs:string"/>
+  </message>
+  <message name="consultarPedido1Response">
+    <part name="return" type="ns3:TPedidoRetornoDTO"/>
+  </message>
+  <portType name="IPizzariaBackendController">
+    <operation name="efetuarPedido">
+      <input message="tns:efetuarPedido0Request"/>
+      <output message="tns:efetuarPedido0Response"/>
+    </operation>
+    <operation name="consultarPedido">
+      <input message="tns:consultarPedido1Request"/>
+      <output message="tns:consultarPedido1Response"/>
+    </operation>
+  </portType>
+  <binding name="IPizzariaBackendControllerbinding" type="tns:IPizzariaBackendController">
+    <binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" xmlns="http://schemas.xmlsoap.org/wsdl/soap/"/>
+    <operation name="efetuarPedido">
+      <operation soapAction="urn:PizzariaBackendControllerIntf-IPizzariaBackendController#efetuarPedido" style="rpc" xmlns="http://schemas.xmlsoap.org/wsdl/soap/"/>
+      <input>
+        <body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:PizzariaBackendControllerIntf-IPizzariaBackendController" xmlns="http://schemas.xmlsoap.org/wsdl/soap/"/>
+      </input>
+      <output>
+        <body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:PizzariaBackendControllerIntf-IPizzariaBackendController" xmlns="http://schemas.xmlsoap.org/wsdl/soap/"/>
+      </output>
+    </operation>
+    <operation name="consultarPedido">
+      <operation soapAction="urn:PizzariaBackendControllerIntf-IPizzariaBackendController#consultarPedido" style="rpc" xmlns="http://schemas.xmlsoap.org/wsdl/soap/"/>
+      <input>
+        <body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:PizzariaBackendControllerIntf-IPizzariaBackendController" xmlns="http://schemas.xmlsoap.org/wsdl/soap/"/>
+      </input>
+      <output>
+        <body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:PizzariaBackendControllerIntf-IPizzariaBackendController" xmlns="http://schemas.xmlsoap.org/wsdl/soap/"/>
+      </output>
+    </operation>
+  </binding>
+  <service name="IPizzariaBackendControllerservice">
+    <port name="IPizzariaBackendControllerPort" binding="tns:IPizzariaBackendControllerbinding">
+      <address location="http://localhost:8080/soap/IPizzariaBackendController" xmlns="http://schemas.xmlsoap.org/wsdl/soap/"/>
+    </port>
+  </service>
+</definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://localhost:8080/soap/IPizzariaBackendController</con:endpoint></con:endpoints><con:operation id="73dabee1-e18e-463f-a875-f2d306406e07" isOneWay="false" action="urn:PizzariaBackendControllerIntf-IPizzariaBackendController#consultarPedido" name="consultarPedido" bindingOperationName="consultarPedido" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="3be54854-91de-4f46-b2e1-9837861cc208" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/soap/IPizzariaBackendController</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:PizzariaBackendControllerIntf-IPizzariaBackendController">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <urn:consultarPedido soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">\r
+         <ADocumentoCliente xsi:type="xsd:string">00507669967</ADocumentoCliente>\r
+      </urn:consultarPedido>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:PizzariaBackendControllerIntf-IPizzariaBackendController#consultarPedido"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="414eacec-a5e0-4033-9c15-a6539f220fe9" isOneWay="false" action="urn:PizzariaBackendControllerIntf-IPizzariaBackendController#efetuarPedido" name="efetuarPedido" bindingOperationName="efetuarPedido" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="50713dda-3a5d-4683-a488-8b96bbc82f3a" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/soap/IPizzariaBackendController</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:PizzariaBackendControllerIntf-IPizzariaBackendController">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <urn:efetuarPedido soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">\r
+         <APizzaTamanho xsi:type="urn:TPizzaTamanhoEnum" xmlns:urn="urn:UPizzaTamanhoEnum">enGrande</APizzaTamanho>\r
+         <APizzaSabor xsi:type="urn:TPizzaSaborEnum" xmlns:urn="urn:UPizzaSaborEnum">enCalabresa</APizzaSabor>\r
+         <ADocumentoCliente xsi:type="xsd:string">00507669967</ADocumentoCliente>\r
+      </urn:efetuarPedido>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="urn:PizzariaBackendControllerIntf-IPizzariaBackendController#efetuarPedido"/><con:wsrmConfig version="1.2"/></con:call></con:operation></con:interface><con:testSuite id="f5112520-c01b-40f0-a01a-3a02941c9758" name="IPizzariaBackendControllerbinding TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="18e911de-416c-46b4-bdd8-3854630f2d16" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="consultarPedido TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="0df7eff4-6265-4c7a-9917-c4945e3c0402" name="consultarPedido"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>IPizzariaBackendControllerbinding</con:interface><con:operation>consultarPedido</con:operation><con:request name="consultarPedido" id="78474242-4cfe-4907-add8-8b9f27e04511"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/soap/IPizzariaBackendController</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:PizzariaBackendControllerIntf-IPizzariaBackendController">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <urn:consultarPedido soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">\r
+         <ADocumentoCliente xsi:type="xsd:string">?</ADocumentoCliente>\r
+      </urn:consultarPedido>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="urn:PizzariaBackendControllerIntf-IPizzariaBackendController#consultarPedido"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="18525009-f4e8-41b2-ae2b-f95d517111fe" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="efetuarPedido TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="34616d55-60b9-4800-a3ff-99a65d276b24" name="efetuarPedido"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>IPizzariaBackendControllerbinding</con:interface><con:operation>efetuarPedido</con:operation><con:request name="efetuarPedido" id="f724e4d6-89dd-4898-8d18-5eb69abd9bb2"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://localhost:8080/soap/IPizzariaBackendController</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:urn="urn:PizzariaBackendControllerIntf-IPizzariaBackendController">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <urn:efetuarPedido soapenv:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/">\r
+         <APizzaTamanho xsi:type="urn:TPizzaTamanhoEnum" xmlns:urn="urn:UPizzaTamanhoEnum">?</APizzaTamanho>\r
+         <APizzaSabor xsi:type="urn:TPizzaSaborEnum" xmlns:urn="urn:UPizzaSaborEnum">?</APizzaSabor>\r
+         <ADocumentoCliente xsi:type="xsd:string">?</ADocumentoCliente>\r
+      </urn:efetuarPedido>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:wsaConfig action="urn:PizzariaBackendControllerIntf-IPizzariaBackendController#efetuarPedido"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/><con:oAuth1ProfileContainer/><con:sensitiveInformation/></con:soapui-project>

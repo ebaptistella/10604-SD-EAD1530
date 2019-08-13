@@ -14,18 +14,40 @@ type
 
     function calcularValorPedido(const APizzaTamanho: TPizzaTamanhoEnum): Currency;
     function calcularTempoPreparo(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum): Integer;
+    function buscaSaborPizza(SaborBD: Integer): TPizzaSaborEnum;
+    function buscaTamanhoPizza(TamanhoBD: Integer): TPizzaTamanhoEnum;
   public
     function efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const ADocumentoCliente: String): TPedidoRetornoDTO;
-
+    function consultarPedido(const ADocumentoCliente: string): TPedidoRetornoDTO; stdcall;
     constructor Create; reintroduce;
+
   end;
 
 implementation
 
 uses
-  UPedidoRepositoryImpl, System.SysUtils, UClienteServiceImpl;
+  UPedidoRepositoryImpl, System.SysUtils, UClienteServiceImpl,
+  FireDAC.Comp.Client;
 
 { TPedidoService }
+
+function TPedidoService.buscaSaborPizza(SaborBD: Integer): TPizzaSaborEnum;
+begin
+  case SaborBD of
+    0: Result := enCalabresa;
+    1: Result := enMarguerita;
+    2: Result := enPortuguesa;
+  end;
+end;
+
+function TPedidoService.buscaTamanhoPizza(TamanhoBD: Integer): TPizzaTamanhoEnum;
+begin
+  case TamanhoBD of
+    0: Result := enPequena;
+    1: Result := enMedia;
+    2: Result := enGrande;
+  end;
+end;
 
 function TPedidoService.calcularTempoPreparo(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum): Integer;
 begin
@@ -53,6 +75,23 @@ begin
       Result := 30;
     enGrande:
       Result := 40;
+  end;
+end;
+
+function TPedidoService.consultarPedido(const ADocumentoCliente: string): TPedidoRetornoDTO;
+var
+  oFDQuery: TFDQuery;
+begin
+  oFDQuery := TFDQuery.Create(nil);
+  try
+    FPedidoRepository.consultarPedido(ADocumentoCliente, oFDQuery);
+    if (oFDQuery.IsEmpty) then
+      raise Exception.Create('O Cliente com o nº de Documento ' + ADocumentoCliente + ' não possui pedidos!!!');
+
+    with oFDQuery do
+      Result := TPedidoRetornoDTO.Create(buscaTamanhoPizza(FieldByName('en_tamanhopizza').AsInteger), buscaSaborPizza(FieldByName('en_saborpizza').AsInteger), FieldByName('vl_pedido').AsCurrency, FieldByName('nr_tempopedido').AsInteger);
+  finally
+    oFDQuery.Free;
   end;
 end;
 
