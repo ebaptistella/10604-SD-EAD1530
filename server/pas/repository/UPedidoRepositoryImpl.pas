@@ -14,8 +14,11 @@ type
     procedure efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const AValorPedido: Currency;
       const ATempoPreparo: Integer; const ACodigoCliente: Integer);
 
+    procedure consultarpedido(const aDocumetoCliente: string; out aFDQuery: TFDQuery);
+
     constructor Create; reintroduce;
     destructor Destroy; override;
+
   end;
 
 implementation
@@ -29,6 +32,11 @@ const
     'INSERT INTO tb_pedido (cd_cliente, dt_pedido, dt_entrega, vl_pedido, nr_tempopedido) VALUES (:pCodigoCliente, :pDataPedido, :pDataEntrega, :pValorPedido, :pTempoPedido)';
 
   { TPedidoRepository }
+
+procedure TPedidoRepository.consultarpedido(const aDocumetoCliente: string; out aFDQuery: TFDQuery);
+begin
+//Implementar
+end;
 
 constructor TPedidoRepository.Create;
 begin

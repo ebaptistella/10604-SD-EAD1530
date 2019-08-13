@@ -53,7 +53,7 @@ object Form1: TForm1
     Items.Strings = (
       'enPequena'
       'enMedia'
-      'enGrange')
+      'enGrande')
   end
   object cmbSaborPizza: TComboBox
     Left = 16
@@ -68,7 +68,7 @@ object Form1: TForm1
   end
   object Button1: TButton
     Left = 104
-    Top = 216
+    Top = 217
     Width = 105
     Height = 25
     Caption = '&1 - Fazer Pedido'

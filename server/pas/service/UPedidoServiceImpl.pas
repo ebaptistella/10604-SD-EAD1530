@@ -4,7 +4,7 @@ interface
 
 uses
   UPedidoServiceIntf, UPizzaTamanhoEnum, UPizzaSaborEnum,
-  UPedidoRepositoryIntf, UPedidoRetornoDTOImpl, UClienteServiceIntf;
+  UPedidoRepositoryIntf, UPedidoRetornoDTOImpl, UClienteServiceIntf, FireDAC.Comp.Client;
 
 type
   TPedidoService = class(TInterfacedObject, IPedidoService)
@@ -16,8 +16,10 @@ type
     function calcularTempoPreparo(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum): Integer;
   public
     function efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const ADocumentoCliente: String): TPedidoRetornoDTO;
+    function ConsultarPedido(const ADocumentoCliente: string): TPedidoRetornoDTO; stdcall;
 
     constructor Create; reintroduce;
+
   end;
 
 implementation
@@ -53,6 +55,22 @@ begin
       Result := 30;
     enGrande:
       Result := 40;
+  end;
+end;
+
+function TPedidoService.ConsultarPedido(const ADocumentoCliente: string): TPedidoRetornoDTO;
+var
+  oFDQuery : TFdQuery;
+begin
+  oFDQuery := TFdQuery.Create(nil);
+  try
+    FPedidoRepository.consultarpedido(ADocumentoCliente, oFDQuery);
+
+    if oFDQuery.IsEmpty then
+    raise Exception.Create('O Cliente com nro de documento' + ADocumentoCliente + 'não possui pedidos.');
+
+  finally
+    oFDQuery.Free;
   end;
 end;
 
