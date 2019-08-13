@@ -119,6 +119,14 @@
         <DCCReference Include="..\..\shared\pas\dto\UPedidoRetornoDTOImpl.pas"/>
         <DCCReference Include="..\..\shared\pas\enum\UPizzaSaborEnum.pas"/>
         <DCCReference Include="..\..\shared\pas\enum\UPizzaTamanhoEnum.pas"/>
+        <DCCReference Include="..\..\client\pas\ui\UFrmTelaInicial.pas">
+            <Form>FrmTelaInicial</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
+        <DCCReference Include="..\..\client\pas\ui\UFrmConsultaPedido.pas">
+            <Form>FrmConsultaPedido</Form>
+            <FormType>dfm</FormType>
+        </DCCReference>
         <RcItem Include="..\resource\db-init.sql">
             <ContainerId>ResourceItem</ContainerId>
             <ResourceType>RCDATA</ResourceType>

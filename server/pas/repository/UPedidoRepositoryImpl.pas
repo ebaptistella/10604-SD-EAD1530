@@ -13,6 +13,7 @@ type
   public
     procedure efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const AValorPedido: Currency;
       const ATempoPreparo: Integer; const ACodigoCliente: Integer);
+    procedure consultarPedido(const DocumentoCliente: string; out FdQuery: TFDQuery);
 
     constructor Create; reintroduce;
     destructor Destroy; override;
@@ -28,7 +29,30 @@ const
     : String =
     'INSERT INTO tb_pedido (cd_cliente, dt_pedido, dt_entrega, vl_pedido, nr_tempopedido) VALUES (:pCodigoCliente, :pDataPedido, :pDataEntrega, :pValorPedido, :pTempoPedido)';
 
+  CMD_CONSULTA_PEDIDO:
+    string =
+    'select ''enPequena'' as tamanho_pizza, '+
+     ' ''enCalabresa'' as sabor_pizza, '+
+     ' P.vl_pedido, '+
+     ' P.nr_tempoPedido, '+
+     '  P.id '+
+    'from tb_pedido P '+
+    'join tb_cliente CLI on CLI.id = P.cd_cliente '+
+    'where CLI.nr_documento = :Doc '+
+    'order by P.id desc '+
+    'limit 1 ';
+
   { TPedidoRepository }
+
+procedure TPedidoRepository.consultarPedido(const DocumentoCliente: string;
+  out FdQuery: TFDQuery);
+begin
+  FdQuery.Connection:= FDBConnection.getDefaultConnection;
+  FdQuery.SQL.Text:= CMD_CONSULTA_PEDIDO;
+  FdQuery.ParamByName('doc').AsString:= DocumentoCliente;
+  FdQuery.Prepare;
+  FdQuery.Open;
+end;
 
 constructor TPedidoRepository.Create;
 begin

@@ -3,7 +3,8 @@ unit UFrmPrincipalImpl;
 interface
 
 uses
-  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants,
+  System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls;
 
 type
@@ -39,8 +40,13 @@ procedure TForm1.Button1Click(Sender: TObject);
 var
   oPizzariaBackendController: IPizzariaBackendController;
 begin
-  oPizzariaBackendController := WSDLPizzariaBackendControllerImpl.GetIPizzariaBackendController(edtEnderecoBackend.Text);
-  mmRetornoWebService.Text := TJson.ObjectToJsonString(oPizzariaBackendController.efetuarPedido(TRttiEnumerationType.GetValue<TPizzaTamanhoEnum>(cmbTamanhoPizza.Text), TRttiEnumerationType.GetValue<TPizzaSaborEnum>(cmbSaborPizza.Text), edtDocumentoCliente.Text));
+  oPizzariaBackendController := WSDLPizzariaBackendControllerImpl.
+    GetIPizzariaBackendController(edtEnderecoBackend.Text);
+  mmRetornoWebService.Text := TJson.ObjectToJsonString
+    (oPizzariaBackendController.efetuarPedido
+    (TRttiEnumerationType.GetValue<TPizzaTamanhoEnum>(cmbTamanhoPizza.Text),
+    TRttiEnumerationType.GetValue<TPizzaSaborEnum>(cmbSaborPizza.Text),
+    edtDocumentoCliente.Text));
 end;
 
 end.

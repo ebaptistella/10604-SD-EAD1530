@@ -33,7 +33,9 @@ uses
   UClienteServiceImpl in '..\pas\service\UClienteServiceImpl.pas',
   UPedidoRetornoDTOImpl in '..\..\shared\pas\dto\UPedidoRetornoDTOImpl.pas',
   UPizzaSaborEnum in '..\..\shared\pas\enum\UPizzaSaborEnum.pas',
-  UPizzaTamanhoEnum in '..\..\shared\pas\enum\UPizzaTamanhoEnum.pas';
+  UPizzaTamanhoEnum in '..\..\shared\pas\enum\UPizzaTamanhoEnum.pas',
+  UFrmTelaInicial in '..\..\client\pas\ui\UFrmTelaInicial.pas' {FrmTelaInicial},
+  UFrmConsultaPedido in '..\..\client\pas\ui\UFrmConsultaPedido.pas' {FrmConsultaPedido};
 
 {$R *.res}
 
@@ -73,6 +75,9 @@ begin
     WebRequestHandler.WebModuleClass := WebModuleClass;
   Application.Initialize;
   Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TFrmTelaInicial, FrmTelaInicial);
+  Application.CreateForm(TFrmConsultaPedido, FrmConsultaPedido);
+  Application.CreateForm(TFrmConsultaPedido, FrmConsultaPedido);
   Application.Run;
 
 end.
