@@ -29,7 +29,7 @@ type
     ['{D376B504-187F-4B02-B95E-50ABFB0AAC85}']
     function efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const ADocumentoCliente: String): TPedidoRetornoDTO; stdcall;
     function ConsultarPedido(const ADocumento: String): String; stdcall;
-    function ConsultarPed(const ADocumento: String): TPedidoRetornoDTO; stdcall;
+    function ConsultarPed(const ADocumento: String): String; stdcall;
   end;
 
 implementation

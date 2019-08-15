@@ -31,7 +31,7 @@ uses
 { TPizzariaBackendController }
 
 function TPizzariaBackendController.ConsultarPed(
-  const ADocumento: string): TPedidoRetornoDTO;
+  const ADocumento: string): string;
 begin
    Result := FPedidoService.ConsultarPed(ADocumento);
 end;

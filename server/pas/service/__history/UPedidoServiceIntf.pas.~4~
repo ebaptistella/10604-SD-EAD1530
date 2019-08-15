@@ -3,8 +3,7 @@ unit UPedidoServiceIntf;
 interface
 
 uses
-  UPizzaTamanhoEnum, UPizzaSaborEnum, UPedidoRetornoDTOImpl,
-  FireDAC.Comp.Client;
+  UPizzaTamanhoEnum, UPizzaSaborEnum, UPedidoRetornoDTOImpl;
 
 type
   IPedidoService = interface(IInterface)
@@ -12,7 +11,6 @@ type
 
     function efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const ADocumentoCliente: String): TPedidoRetornoDTO;
     function ConsultarPedido(const ADocumentoCliente: String): String;
-    function ConsultarPed(const ADocumentoCliente: String): TPedidoRetornoDTO;
   end;
 
 implementation

@@ -15,7 +15,6 @@ type
       const ATempoPreparo: Integer; const ACodigoCliente: Integer);
 
     function ConsultarPedido(const ADocumento: String):String;
-    procedure ConsultaPed(const ADocumento: string; out AQuery: TFDQuery);
 
 
     constructor Create; reintroduce;
@@ -30,31 +29,16 @@ uses
 const
   CMD_INSERT_PEDIDO
     : String =
-    'INSERT INTO tb_pedido (cd_cliente, dt_pedido, dt_entrega, vl_pedido, nr_tempopedido,tamanho,sabor) VALUES (:pCodigoCliente, :pDataPedido, :pDataEntrega, :pValorPedido, :pTempoPedido,:ptamanho,:psabor)';
+    'INSERT INTO tb_pedido (cd_cliente, dt_pedido, dt_entrega, vl_pedido, nr_tempopedido) VALUES (:pCodigoCliente, :pDataPedido, :pDataEntrega, :pValorPedido, :pTempoPedido)';
   CMD_CONSULTA_PEDIDO :String =
     'select count(b.cd_cliente), min(b.dt_pedido),max(b.dt_entrega),sum(b.nr_tempopedido), sum(b.vl_pedido)  from tb_cliente a,  tb_pedido b on a.id = b.cd_cliente  where a.id = b.cd_cliente and  a.nr_documento = :pDocumento';
-  CMD_CONSULTA_PED :String =
-    'select b.tamanho,b.sabor, b.dt_pedido,b.dt_entrega,b.nr_tempopedido, b.vl_pedido  from tb_cliente a,  tb_pedido b on a.id = b.cd_cliente  where a.id = b.cd_cliente and  a.nr_documento = :pDocumento order by b.id desc limit 1';
-
   { TPedidoRepository }
-
-procedure TPedidoRepository.ConsultaPed(const ADocumento: string;
-  out AQuery: TFDQuery);
-begin
-  AQuery.SQL.Clear;
-  AQuery.Connection := FDBConnection.getDefaultConnection;
-  AQuery.SQL.Text := CMD_CONSULTA_PED;
-
-  AQuery.ParamByName('pDocumento').value := ADocumento;
-
-  AQuery.Open();
-
-
-
-end;
 
 function TPedidoRepository.ConsultarPedido(
   const ADocumento: String): String;
+Var
+  Pizzas,Tempo:Integer;
+  DtPed,DtPrevEnt,VrTotal:String;
 
 begin
 
@@ -68,12 +52,20 @@ begin
   if FFDQuery.Fields[0].AsString = '0' then
     Result := 'Pedido não localizado.'
   else
-    Result := 'Quantidade de Pizzas: ' + FFDQuery.Fields[0].AsString +
-              ' Data Pedido: ' + FFDQuery.Fields[1].AsString +
-              ' Data Prev. Entrega: ' + FFDQuery.Fields[2].AsString +
-              ' Tempo total de preparo: ' + FFDQuery.Fields[3].AsString +
-              ' Valor total: ' + FFDQuery.Fields[4].AsString;
+  begin
+    Pizzas    := FFDQuery.Fields[0].Value;
+    Tempo     := FFDQuery.Fields[3].Value;
+    DtPed     := FFDQuery.Fields[1].Value;
+    DtPrevEnt := FFDQuery.Fields[2].Value;
+    VrTotal   := FFDQuery.Fields[4].Value;
 
+    Result := 'Quantidade de Pizzas: ' + Pizzas.ToString +
+              'Data Pedido: ' + DtPed +
+              'Data Prev. Entrega: ' + DtPrevEnt +
+              'Tempo total de preparo: ' + Tempo.ToString +
+              'Valor total: ' + VrTotal;
+
+  end;
 
 end;
 
@@ -102,9 +94,6 @@ begin
   FFDQuery.ParamByName('pDataEntrega').AsDateTime := now();
   FFDQuery.ParamByName('pValorPedido').AsCurrency := AValorPedido;
   FFDQuery.ParamByName('pTempoPedido').AsInteger := ATempoPreparo;
-  FFDQuery.ParamByName('ptamanho').Value := APizzaTamanho;
-  FFDQuery.ParamByName('psabor').Value := APizzaSabor;
-
 
   FFDQuery.Prepare;
   FFDQuery.ExecSQL(True);

@@ -13,8 +13,6 @@ type
       : TPedidoRetornoDTO; stdcall;
     function ConsultarPedido(const ADocumento: Integer)
       : String; stdcall;
-    function ConsultarPed(const ADocumento: Integer)
-      : TPedidoRetornoDTO; stdcall;
   end;
 
 function GetIPizzariaBackendController(const AEnderecoServidor: String): IPizzariaBackendController;

@@ -41,15 +41,14 @@ const
 procedure TPedidoRepository.ConsultaPed(const ADocumento: string;
   out AQuery: TFDQuery);
 begin
-  AQuery.SQL.Clear;
-  AQuery.Connection := FDBConnection.getDefaultConnection;
-  AQuery.SQL.Text := CMD_CONSULTA_PED;
+  FFDQuery.SQL.Clear;
+  FFDQuery.SQL.Text := CMD_CONSULTA_PED;
 
-  AQuery.ParamByName('pDocumento').value := ADocumento;
+  FFDQuery.ParamByName('pDocumento').value := ADocumento;
 
-  AQuery.Open();
+  FFDQuery.Open();
 
-
+  AQuery := FFDQuery;
 
 end;
 
