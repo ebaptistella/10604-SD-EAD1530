@@ -55,7 +55,11 @@ begin
         oSQL := TStringList.Create;
         try
           oSQL.LoadFromStream(oSQLResource);
-          getDefaultConnection.ExecSQL(oSQL.Text);
+          try
+            getDefaultConnection.ExecSQL(oSQL.Text);
+          except
+
+          end;
         finally
           oSQL.Free;
         end;
