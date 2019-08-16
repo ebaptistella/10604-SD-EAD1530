@@ -16,6 +16,7 @@ type
     function calcularTempoPreparo(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum): Integer;
   public
     function efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const ADocumentoCliente: String): TPedidoRetornoDTO;
+    function ConsultaPedido(const ADocCliente: string): TPedidoRetornoDTO;
 
     constructor Create; reintroduce;
   end;
@@ -56,6 +57,22 @@ begin
   end;
 end;
 
+function TPedidoService.ConsultaPedido(
+  const ADocCliente: string): TPedidoRetornoDTO;
+var
+  tPedido: TInfoPedido;
+begin
+  FPedidoRepository.ConsultaPedido(ADocCliente, tPedido);
+
+  if tPedido.PedDocCliente = EmptyStr then
+    raise Exception.Create('Não foi localizado o Pedido para o cliente conforme o documento informado!');
+
+  Result := TPedidoRetornoDTO.Create(tPedido.PizzaTamanho,
+                                     tPedido.PizzaSabor,
+                                     tPedido.PedValor,
+                                     tPedido.PedTempoPreparo);
+end;
+
 constructor TPedidoService.Create;
 begin
   inherited;
@@ -71,9 +88,9 @@ var
   oTempoPreparo: Integer;
   oCodigoCliente: Integer;
 begin
-  oValorPedido := calcularValorPedido(APizzaTamanho);
+  oValorPedido  := calcularValorPedido(APizzaTamanho);
   oTempoPreparo := calcularTempoPreparo(APizzaTamanho, APizzaSabor);
-  oCodigoCliente := FClienteService.adquirirCodigoCliente(ADocumentoCliente);
+  oCodigoCliente:= FClienteService.adquirirCodigoCliente(ADocumentoCliente);
 
   FPedidoRepository.efetuarPedido(APizzaTamanho, APizzaSabor, oValorPedido, oTempoPreparo, oCodigoCliente);
   Result := TPedidoRetornoDTO.Create(APizzaTamanho, APizzaSabor, oValorPedido, oTempoPreparo);
