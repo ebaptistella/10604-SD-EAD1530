@@ -16,8 +16,11 @@ type
     FPedidoService: IPedidoService;
   public
     function efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const ADocumentoCliente: String): TPedidoRetornoDTO; stdcall;
+    function consultarPedido(const ADocumentoCliente: string): TPedidoRetornoDTO; stdcall;
 
     constructor Create; override;
+
+
   end;
 
 implementation
@@ -27,6 +30,12 @@ uses
 
 
 { TPizzariaBackendController }
+
+function TPizzariaBackendController.consultarPedido(
+  const ADocumentoCliente: string): TPedidoRetornoDTO;
+begin
+  Result := FPedidoService.ConsultarPedido(ADocumentoCliente);
+end;
 
 constructor TPizzariaBackendController.Create;
 begin
