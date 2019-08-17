@@ -13,11 +13,15 @@ type
     Label1: TLabel;
     Label2: TLabel;
     cmbSaborPizza: TComboBox;
-    Button1: TButton;
+    BTPedido: TButton;
     mmRetornoWebService: TMemo;
     Label3: TLabel;
     edtEnderecoBackend: TLabeledEdit;
-    procedure Button1Click(Sender: TObject);
+    BTConsulta: TButton;
+    edtValor: TLabeledEdit;
+    edtTempo: TLabeledEdit;
+    procedure BTPedidoClick(Sender: TObject);
+    procedure BTConsultaClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -31,16 +35,29 @@ implementation
 
 uses
   WSDLPizzariaBackendControllerImpl, Rtti, REST.JSON, UPizzaTamanhoEnum,
-  UPizzaSaborEnum;
+  UPizzaSaborEnum, UPedidoRetornoDTOImpl;
 
 {$R *.dfm}
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TForm1.BTPedidoClick(Sender: TObject);
 var
   oPizzariaBackendController: IPizzariaBackendController;
 begin
   oPizzariaBackendController := WSDLPizzariaBackendControllerImpl.GetIPizzariaBackendController(edtEnderecoBackend.Text);
   mmRetornoWebService.Text := TJson.ObjectToJsonString(oPizzariaBackendController.efetuarPedido(TRttiEnumerationType.GetValue<TPizzaTamanhoEnum>(cmbTamanhoPizza.Text), TRttiEnumerationType.GetValue<TPizzaSaborEnum>(cmbSaborPizza.Text), edtDocumentoCliente.Text));
+end;
+
+procedure TForm1.BTConsultaClick(Sender: TObject);
+var
+  oPizzariaBackendController: IPizzariaBackendController;
+  RetornoDTO: TPedidoRetornoDTO;
+begin
+  oPizzariaBackendController := WSDLPizzariaBackendControllerImpl.GetIPizzariaBackendController(edtEnderecoBackend.Text);
+  RetornoDTO:= oPizzariaBackendController.consultarPedido(edtDocumentoCliente.Text);
+  edtValor.Text := FormatCurr('R$0.00',RetornoDTO.ValorTotalPedido);
+  edtTempo.Text := RetornoDTO.TempoPreparo.ToString;
+  cmbTamanhoPizza.ItemIndex := Integer(RetornoDTO.PizzaTamanho);
+  cmbSaborPizza.ItemIndex := Integer(RetornoDTO.PizzaSabor);
 end;
 
 end.

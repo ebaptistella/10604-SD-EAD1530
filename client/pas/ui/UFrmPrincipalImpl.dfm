@@ -2,8 +2,8 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'Client'
-  ClientHeight = 250
-  ClientWidth = 596
+  ClientHeight = 328
+  ClientWidth = 578
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -28,8 +28,8 @@ object Form1: TForm1
     Caption = 'Sabor da Pizza:'
   end
   object Label3: TLabel
-    Left = 312
-    Top = 8
+    Left = 303
+    Top = 5
     Width = 118
     Height = 13
     Caption = 'Retorno do WebService:'
@@ -53,11 +53,11 @@ object Form1: TForm1
     Items.Strings = (
       'enPequena'
       'enMedia'
-      'enGrange')
+      'enGrande')
   end
   object cmbSaborPizza: TComboBox
     Left = 16
-    Top = 152
+    Top = 155
     Width = 193
     Height = 21
     TabOrder = 2
@@ -66,18 +66,18 @@ object Form1: TForm1
       'enMarguerita'
       'enPortuguesa')
   end
-  object Button1: TButton
-    Left = 104
-    Top = 216
-    Width = 105
+  object BTPedido: TButton
+    Left = 16
+    Top = 295
+    Width = 112
     Height = 25
     Caption = '&1 - Fazer Pedido'
     TabOrder = 3
-    OnClick = Button1Click
+    OnClick = BTPedidoClick
   end
   object mmRetornoWebService: TMemo
-    Left = 312
-    Top = 25
+    Left = 303
+    Top = 24
     Width = 265
     Height = 217
     Lines.Strings = (
@@ -94,5 +94,34 @@ object Form1: TForm1
     EditLabel.Caption = 'Endere'#231'o Pizzaria Backend:'
     TabOrder = 5
     Text = 'http://localhost:8080/soap/IPizzariaBackendController'
+  end
+  object BTConsulta: TButton
+    Left = 136
+    Top = 295
+    Width = 113
+    Height = 25
+    Caption = '&2 - Consultar Pedido'
+    TabOrder = 6
+    OnClick = BTConsultaClick
+  end
+  object edtValor: TLabeledEdit
+    Left = 16
+    Top = 248
+    Width = 193
+    Height = 21
+    EditLabel.Width = 100
+    EditLabel.Height = 13
+    EditLabel.Caption = 'Valor do Documento:'
+    TabOrder = 7
+  end
+  object edtTempo: TLabeledEdit
+    Left = 16
+    Top = 205
+    Width = 193
+    Height = 21
+    EditLabel.Width = 92
+    EditLabel.Height = 13
+    EditLabel.Caption = 'Tempo de Preparo:'
+    TabOrder = 8
   end
 end
