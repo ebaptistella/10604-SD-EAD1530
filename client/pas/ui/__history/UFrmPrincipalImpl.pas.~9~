@@ -17,7 +17,6 @@ type
     mmRetornoWebService: TMemo;
     Label3: TLabel;
     edtEnderecoBackend: TLabeledEdit;
-    Button2: TButton;
     procedure Button1Click(Sender: TObject);
     procedure Button2Click(Sender: TObject);
   private
@@ -78,7 +77,7 @@ begin
 
   oPizzariaBackendController := WSDLPizzariaBackendControllerImpl.GetIPizzariaBackendController(edtEnderecoBackend.Text);
 
-  oDTO := oPizzariaBackendController.consultarPedido(edtDocumentoCliente.Text);
+ // oDTO := oPizzariaBackendController.consultarPedido(edtDocumentoClienteConsulta.Text);
   mmRetornoWebService.Clear;
 
   mmRetornoWebService.Lines.Add('Tamanho da Pizza: '+ Copy(

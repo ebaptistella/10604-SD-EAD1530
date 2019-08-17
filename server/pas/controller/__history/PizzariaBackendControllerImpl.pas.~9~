@@ -35,7 +35,7 @@ uses
 function TPizzariaBackendController.consultarPedido(
   const ADocumentoCliente: string): TPedidoRetornoDTO;
 begin
-  Result:= FPedidoService.consultarPedido(ADocumentoCliente);
+
 end;
 
 constructor TPizzariaBackendController.Create;

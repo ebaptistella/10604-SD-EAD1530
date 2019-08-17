@@ -30,8 +30,6 @@ uses
 
 { TPizzariaBackendController }
 
-
-
 function TPizzariaBackendController.consultarPedido(
   const ADocumentoCliente: string): TPedidoRetornoDTO;
 begin

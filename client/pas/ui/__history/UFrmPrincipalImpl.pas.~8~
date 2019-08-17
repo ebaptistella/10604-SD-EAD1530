@@ -78,7 +78,7 @@ begin
 
   oPizzariaBackendController := WSDLPizzariaBackendControllerImpl.GetIPizzariaBackendController(edtEnderecoBackend.Text);
 
-  oDTO := oPizzariaBackendController.consultarPedido(edtDocumentoCliente.Text);
+ // oDTO := oPizzariaBackendController.consultarPedido(edtDocumentoClienteConsulta.Text);
   mmRetornoWebService.Clear;
 
   mmRetornoWebService.Lines.Add('Tamanho da Pizza: '+ Copy(
