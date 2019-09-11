@@ -3,7 +3,8 @@ unit UPedidoRepositoryImpl;
 interface
 
 uses
-  UPedidoRepositoryIntf, UPizzaTamanhoEnum, UPizzaSaborEnum, UDBConnectionIntf, FireDAC.Comp.Client;
+  UPedidoRepositoryIntf, UPizzaTamanhoEnum, UPizzaSaborEnum,
+  UDBConnectionIntf, FireDAC.Comp.Client, TypInfo;
 
 type
   TPedidoRepository = class(TInterfacedObject, IPedidoRepository)
@@ -11,8 +12,11 @@ type
     FDBConnection: IDBConnection;
     FFDQuery: TFDQuery;
   public
-    procedure efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const AValorPedido: Currency;
-      const ATempoPreparo: Integer; const ACodigoCliente: Integer);
+    procedure efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum;
+                            const APizzaSabor: TPizzaSaborEnum;
+                            const AValorTotal: Currency;
+                            const ATempoTotal: Integer;
+                            const ACodCliente: Integer);
 
     constructor Create; reintroduce;
     destructor Destroy; override;
@@ -26,17 +30,17 @@ uses
 const
   CMD_INSERT_PEDIDO
     : String =
-    'INSERT INTO tb_pedido (cd_cliente, dt_pedido, dt_entrega, vl_pedido, nr_tempopedido) VALUES (:pCodigoCliente, :pDataPedido, :pDataEntrega, :pValorPedido, :pTempoPedido)';
+    'INSERT INTO Opr_Pedido (Cod_Cliente, Data_Pedido, Data_Entrega, Valor_Total, Tempo_Total) '+
+    '   VALUES (:pCodCliente, :pDataPedido, :pDataEntrega, :pValorTotal, :pTempoTotal)';
 
   { TPedidoRepository }
 
 constructor TPedidoRepository.Create;
 begin
   inherited;
-
-  FDBConnection := TDBConnection.Create;
-  FFDQuery := TFDQuery.Create(nil);
-  FFDQuery.Connection := FDBConnection.getDefaultConnection;
+    FDBConnection := TDBConnection.Create;
+    FFDQuery := TFDQuery.Create(nil);
+    FFDQuery.Connection := FDBConnection.getDefaultConnection;
 end;
 
 destructor TPedidoRepository.Destroy;
@@ -45,17 +49,18 @@ begin
   inherited;
 end;
 
-procedure TPedidoRepository.efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const AValorPedido: Currency;
-  const ATempoPreparo: Integer; const ACodigoCliente: Integer);
+procedure TPedidoRepository.efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum;
+                                          const APizzaSabor: TPizzaSaborEnum;
+                                          const AValorTotal: Currency;
+                                          const ATempoTotal: Integer;
+                                          const ACodCliente: Integer);
 begin
   FFDQuery.SQL.Text := CMD_INSERT_PEDIDO;
-
-  FFDQuery.ParamByName('pCodigoCliente').AsInteger := ACodigoCliente;
-  FFDQuery.ParamByName('pDataPedido').AsDateTime := now();
+  FFDQuery.ParamByName('pCodCliente').AsInteger   := ACodCliente;
+  FFDQuery.ParamByName('pDataPedido').AsDateTime  := now();
   FFDQuery.ParamByName('pDataEntrega').AsDateTime := now();
-  FFDQuery.ParamByName('pValorPedido').AsCurrency := AValorPedido;
-  FFDQuery.ParamByName('pTempoPedido').AsInteger := ATempoPreparo;
-
+  FFDQuery.ParamByName('pValorTotal').AsCurrency  := AValorTotal;
+  FFDQuery.ParamByName('pTempoTotal').AsInteger   := ATempoTotal;
   FFDQuery.Prepare;
   FFDQuery.ExecSQL(True);
 end;
