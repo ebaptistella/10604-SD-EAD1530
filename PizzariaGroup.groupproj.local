@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <BorlandProject>
-  <Default.Personality>
-    <Projects ActiveProject="C:\Users\Admin\10604-SD-EAD1530-SOAP\server\dpr\PizzariaBackend.dproj"/>
-  </Default.Personality>
+	<Default.Personality>
+		<Projects ActiveProject="C:\Users\Admin\10604-SD-EAD1530-SOAP\client\dpr\PizzariaFrontend.dproj"/>
+	</Default.Personality>
 </BorlandProject>
