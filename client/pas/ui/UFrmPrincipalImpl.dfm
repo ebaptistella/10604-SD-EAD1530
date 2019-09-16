@@ -2,7 +2,7 @@ object Form1: TForm1
   Left = 0
   Top = 0
   Caption = 'Client'
-  ClientHeight = 250
+  ClientHeight = 510
   ClientWidth = 596
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -30,6 +30,13 @@ object Form1: TForm1
   object Label3: TLabel
     Left = 312
     Top = 8
+    Width = 118
+    Height = 13
+    Caption = 'Retorno do WebService:'
+  end
+  object Label4: TLabel
+    Left = 312
+    Top = 258
     Width = 118
     Height = 13
     Caption = 'Retorno do WebService:'
@@ -94,5 +101,23 @@ object Form1: TForm1
     EditLabel.Caption = 'Endere'#231'o Pizzaria Backend:'
     TabOrder = 5
     Text = 'http://localhost:8080/soap/IPizzariaBackendController'
+  end
+  object mmRetornoConsultaPedido: TMemo
+    Left = 312
+    Top = 277
+    Width = 265
+    Height = 217
+    Lines.Strings = (
+      'mmRetornoWebService')
+    TabOrder = 6
+  end
+  object Button2: TButton
+    Left = 104
+    Top = 469
+    Width = 105
+    Height = 25
+    Caption = '&2 - Consultar Pedido 2'
+    TabOrder = 7
+    OnClick = Button2Click
   end
 end
