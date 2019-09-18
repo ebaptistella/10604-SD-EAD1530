@@ -66,14 +66,14 @@ object Form1: TForm1
       'enMarguerita'
       'enPortuguesa')
   end
-  object Button1: TButton
-    Left = 104
-    Top = 216
+  object btnFazerPedido: TButton
+    Left = 16
+    Top = 217
     Width = 105
     Height = 25
     Caption = '&1 - Fazer Pedido'
     TabOrder = 3
-    OnClick = Button1Click
+    OnClick = btnFazerPedidoClick
   end
   object mmRetornoWebService: TMemo
     Left = 312
@@ -93,6 +93,15 @@ object Form1: TForm1
     EditLabel.Height = 13
     EditLabel.Caption = 'Endere'#231'o Pizzaria Backend:'
     TabOrder = 5
-    Text = 'http://localhost:8080/soap/IPizzariaBackendController'
+    Text = 'http://localhost:8082/soap/IPizzariaBackendController'
+  end
+  object btnConsultarPedido: TButton
+    Left = 184
+    Top = 217
+    Width = 105
+    Height = 25
+    Caption = '&2 - Consultar Pedido'
+    TabOrder = 6
+    OnClick = btnConsultarPedidoClick
   end
 end
