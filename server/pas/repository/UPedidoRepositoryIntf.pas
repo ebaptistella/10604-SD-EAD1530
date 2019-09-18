@@ -3,7 +3,7 @@ unit UPedidoRepositoryIntf;
 interface
 
 uses
-  UPizzaSaborEnum, UPizzaTamanhoEnum;
+  UPizzaSaborEnum, UPizzaTamanhoEnum, UPedidoRetornoDTOImpl;
 
 type
   IPedidoRepository = interface(IInterface)
@@ -11,6 +11,8 @@ type
 
     procedure efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const AValorPedido: Currency;
       const ATempoPreparo: Integer; const ACodigoCliente: Integer);
+
+    function obterPedido(const ADocumento:integer) : TPedidoRetornoDTO;
   end;
 
 implementation

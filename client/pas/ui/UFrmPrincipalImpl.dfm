@@ -67,9 +67,9 @@ object Form1: TForm1
       'enPortuguesa')
   end
   object Button1: TButton
-    Left = 104
-    Top = 216
-    Width = 105
+    Left = 16
+    Top = 187
+    Width = 193
     Height = 25
     Caption = '&1 - Fazer Pedido'
     TabOrder = 3
@@ -94,5 +94,14 @@ object Form1: TForm1
     EditLabel.Caption = 'Endere'#231'o Pizzaria Backend:'
     TabOrder = 5
     Text = 'http://localhost:8080/soap/IPizzariaBackendController'
+  end
+  object btnConsultar: TBitBtn
+    Left = 16
+    Top = 219
+    Width = 193
+    Height = 25
+    Caption = '2 - Consultar pedido'
+    TabOrder = 6
+    OnClick = btnConsultarClick
   end
 end

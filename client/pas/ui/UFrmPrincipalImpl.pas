@@ -4,7 +4,7 @@ interface
 
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
-  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls;
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.ExtCtrls, Vcl.Buttons;
 
 type
   TForm1 = class(TForm)
@@ -17,7 +17,9 @@ type
     mmRetornoWebService: TMemo;
     Label3: TLabel;
     edtEnderecoBackend: TLabeledEdit;
+    btnConsultar: TBitBtn;
     procedure Button1Click(Sender: TObject);
+    procedure btnConsultarClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -31,9 +33,15 @@ implementation
 
 uses
   WSDLPizzariaBackendControllerImpl, Rtti, REST.JSON, UPizzaTamanhoEnum,
-  UPizzaSaborEnum;
+  UPizzaSaborEnum, uFrmConsultaPedido;
 
 {$R *.dfm}
+
+procedure TForm1.btnConsultarClick(Sender: TObject);
+begin
+ Application.CreateForm(TFrmConsultaPedido,FrmConsultaPedido);
+ FrmConsultaPedido.showmodal;
+end;
 
 procedure TForm1.Button1Click(Sender: TObject);
 var

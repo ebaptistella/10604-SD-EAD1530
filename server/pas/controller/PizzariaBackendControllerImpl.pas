@@ -6,7 +6,7 @@ interface
 
 uses Soap.InvokeRegistry, System.Types, Soap.XSBuiltIns, PizzariaBackendControllerIntf,
   UPizzaSaborEnum, UPizzaTamanhoEnum, UPedidoServiceIntf,
-  UPedidoRetornoDTOImpl;
+  UPedidoRetornoDTOImpl, UClienteRepositoryImpl;
 
 type
 
@@ -14,8 +14,10 @@ type
   TPizzariaBackendController = class(TInvokableClass, IPizzariaBackendController)
   private
     FPedidoService: IPedidoService;
+    FClienteService : TClienteRepository;
   public
     function efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const ADocumentoCliente: String): TPedidoRetornoDTO; stdcall;
+    function obterPedido(const ADocumentoCliente : String): TPedidoRetornoDTO; stdcall;
 
     constructor Create; override;
   end;
@@ -32,12 +34,22 @@ constructor TPizzariaBackendController.Create;
 begin
   inherited;
 
-  FPedidoService := TPedidoService.Create();
+  FPedidoService   := TPedidoService.Create();
+  FClienteService  := TClienteRepository.Create();
 end;
 
 function TPizzariaBackendController.efetuarPedido(const APizzaTamanho: TPizzaTamanhoEnum; const APizzaSabor: TPizzaSaborEnum; const ADocumentoCliente: String): TPedidoRetornoDTO; stdcall;
 begin
   Result := FPedidoService.efetuarPedido(APizzaTamanho, APizzaSabor, ADocumentoCliente);
+end;
+
+function TPizzariaBackendController.obterPedido(
+  const ADocumentoCliente: String): TPedidoRetornoDTO; stdcall;
+var
+  oCodigoCliente: Integer;
+begin
+   oCodigoCliente := FClienteService.adquirirCodigoCliente(ADocumentoCliente);
+   Result := FPedidoService.obterPedido(oCodigoCliente);
 end;
 
 initialization
